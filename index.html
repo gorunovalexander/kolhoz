@@ -12,11 +12,11 @@
         }
         
         :root {
-            /* Базовые относительные размеры */
             font-size: 16px;
-            --container-padding: clamp(1rem, 3vw, 2rem);
-            --border-radius: clamp(1rem, 2vw, 1.5rem);
-            --gap: clamp(0.75rem, 1.5vw, 1.25rem);
+            --container-padding: clamp(0.5rem, 2vw, 1.5rem);
+            --border-radius: clamp(0.8rem, 2vw, 1.2rem);
+            --gap: clamp(0.5rem, 1.5vw, 1rem);
+            --card-min-width: 240px;
         }
         
         body {
@@ -37,147 +37,48 @@
             overflow: hidden;
         }
         
-        /* Используем container queries вместо медиа-запросов по ориентации */
-        .players-section {
-            container-type: inline-size;
-            container-name: players;
-        }
-        
-        /* Адаптация на основе ширины контейнера */
-        @container players (max-width: 800px) {
-            .players-list {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            
-            .player-card {
-                padding: calc(var(--container-padding) * 0.8);
-            }
-            
-            .stat-value {
-                font-size: clamp(1.2rem, 5vw, 1.8rem);
-            }
-            
-            .color-btn {
-                width: clamp(2.5rem, 8vw, 3.5rem);
-                height: clamp(2.5rem, 8vw, 3.5rem);
-                font-size: clamp(1rem, 4vw, 1.3rem);
-            }
-        }
-        
-        @container players (max-width: 500px) {
-            .players-list {
-                grid-template-columns: 1fr !important;
-            }
-            
-            .player-name {
-                font-size: clamp(1.1rem, 5vw, 1.3rem);
-            }
-            
-            .stat-value {
-                font-size: clamp(1.5rem, 6vw, 2rem);
-            }
-            
-            .color-btn {
-                width: clamp(3rem, 10vw, 4rem);
-                height: clamp(3rem, 10vw, 4rem);
-                font-size: clamp(1.1rem, 5vw, 1.4rem);
-            }
-            
-            .action-btn {
-                font-size: clamp(0.9rem, 4vw, 1.1rem);
-                padding: clamp(0.5rem, 3vw, 0.8rem) 0;
-            }
-        }
-        
-        @container players (min-width: 1200px) {
-            .players-list {
-                grid-template-columns: repeat(4, 1fr) !important;
-            }
-            
-            .player-card {
-                padding: clamp(1.2rem, 2vw, 1.8rem);
-            }
-        }
-        
-        @container players (min-width: 1600px) {
-            .players-list {
-                grid-template-columns: repeat(5, 1fr) !important;
-            }
-        }
-        
-        /* Резервные стили для браузеров без поддержки container queries */
-        @media (min-width: 1600px) {
-            .players-list {
-                grid-template-columns: repeat(5, 1fr) !important;
-            }
-        }
-        
-        @media (min-width: 1200px) and (max-width: 1599px) {
-            .players-list {
-                grid-template-columns: repeat(4, 1fr) !important;
-            }
-        }
-        
-        @media (min-width: 800px) and (max-width: 1199px) {
-            .players-list {
-                grid-template-columns: repeat(3, 1fr) !important;
-            }
-        }
-        
-        @media (min-width: 500px) and (max-width: 799px) {
-            .players-list {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-        }
-        
-        @media (max-width: 499px) {
-            .players-list {
-                grid-template-columns: 1fr !important;
-            }
-        }
-        
         /* Apple-style header */
         .header {
             background: #fafafc;
-            padding: clamp(1.2rem, 3vw, 2rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(1rem, 3vw, 1.8rem) clamp(1rem, 4vw, 2rem);
             border-bottom: 1px solid #e6e6e8;
         }
         
         .header h1 {
-            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            font-size: clamp(1.3rem, 5vw, 2rem);
             font-weight: 600;
             color: #1d1d1f;
             letter-spacing: -0.5px;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
         
         .header-sub {
             color: #86868b;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             font-weight: 400;
         }
         
         /* Панель управления */
         .control-panel {
             background: #ffffff;
-            padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1rem, 4vw, 2rem);
             border-bottom: 1px solid #e6e6e8;
             display: flex;
             flex-wrap: wrap;
-            gap: clamp(1rem, 2vw, 1.8rem);
+            gap: clamp(0.8rem, 2vw, 1.5rem);
             align-items: flex-end;
         }
         
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
-            min-width: min(200px, 40vw);
+            gap: 0.3rem;
+            min-width: min(180px, 40vw);
             flex: 1 1 auto;
         }
         
         .control-label {
-            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            font-size: clamp(0.6rem, 2vw, 0.8rem);
             font-weight: 500;
             color: #6e6e73;
             letter-spacing: -0.2px;
@@ -188,23 +89,18 @@
             display: flex;
             align-items: center;
             background: #f5f5f7;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid #e6e6e8;
             transition: all 0.2s;
             width: 100%;
         }
         
-        .control-input-wrapper:focus-within {
-            border-color: #007aff;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-        }
-        
         .control-input-wrapper input {
-            width: min(100px, 25vw);
-            padding: clamp(0.6rem, 2vw, 0.9rem) clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2vw, 0.9rem) clamp(0.8rem, 2vw, 1.2rem);
+            width: min(80px, 20vw);
+            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.5rem, 2vw, 0.8rem) clamp(0.6rem, 2vw, 1rem);
             border: none;
             background: transparent;
-            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            font-size: clamp(0.8rem, 3vw, 1.1rem);
             font-weight: 500;
             color: #1d1d1f;
             outline: none;
@@ -212,25 +108,25 @@
         }
         
         .control-unit {
-            padding-right: clamp(0.6rem, 2vw, 1rem);
+            padding-right: clamp(0.5rem, 2vw, 0.8rem);
             color: #86868b;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             font-weight: 400;
         }
         
         .control-buttons {
             display: flex;
-            gap: 0.25rem;
-            margin-left: 0.25rem;
+            gap: 0.2rem;
+            margin-left: 0.2rem;
         }
         
         .control-step-btn {
-            width: clamp(2rem, 6vw, 2.5rem);
-            height: clamp(2rem, 6vw, 2.5rem);
+            width: clamp(1.8rem, 5vw, 2.2rem);
+            height: clamp(1.8rem, 5vw, 2.2rem);
             border: none;
             background: #ffffff;
-            border-radius: 8px;
-            font-size: clamp(1rem, 3vw, 1.3rem);
+            border-radius: 6px;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             font-weight: 600;
             color: #007aff;
             cursor: pointer;
@@ -241,58 +137,47 @@
             border: 1px solid #d2d2d6;
         }
         
-        .control-step-btn:hover {
-            background: #f5f5f7;
-            border-color: #007aff;
-        }
-        
-        .control-step-btn:active {
-            background: #e8e8ed;
-            transform: scale(0.95);
-        }
-        
         /* Панель порядка */
         .order-panel {
             background: #fafafc;
-            padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(0.6rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
             border-bottom: 1px solid #e6e6e8;
             display: flex;
             flex-wrap: wrap;
-            gap: clamp(0.8rem, 2vw, 1.2rem);
+            gap: clamp(0.6rem, 2vw, 1rem);
             align-items: center;
         }
         
         .order-buttons {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
         
         .apple-btn {
             background: #ffffff;
             border: 1px solid #d2d2d6;
-            border-radius: 10px;
-            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            border-radius: 8px;
+            padding: clamp(0.4rem, 2vw, 0.7rem) clamp(0.6rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             font-weight: 500;
             color: #1d1d1f;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            gap: 0.3rem;
             white-space: nowrap;
         }
         
         .order-display {
             background: #ffffff;
             border: 1px solid #e6e6e8;
-            border-radius: 10px;
-            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            border-radius: 8px;
+            padding: clamp(0.4rem, 2vw, 0.7rem) clamp(0.6rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             color: #1d1d1f;
             flex: 1;
-            min-width: min(200px, 50vw);
+            min-width: min(180px, 50vw);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -300,57 +185,155 @@
         
         /* Список игроков */
         .players-section {
-            padding: clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(0.8rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem);
             background: #ffffff;
         }
         
         .add-player {
             display: flex;
-            gap: clamp(0.5rem, 2vw, 1rem);
-            margin-bottom: clamp(1rem, 3vw, 2rem);
-            max-width: min(400px, 80vw);
+            gap: clamp(0.4rem, 2vw, 0.8rem);
+            margin-bottom: clamp(0.8rem, 3vw, 1.5rem);
+            max-width: min(350px, 80vw);
         }
         
         .add-player input {
             flex: 1;
-            padding: clamp(0.7rem, 2.5vw, 1rem) clamp(0.8rem, 3vw, 1.2rem);
+            padding: clamp(0.6rem, 2.5vw, 0.9rem) clamp(0.7rem, 3vw, 1rem);
             border: 1px solid #d2d2d6;
-            border-radius: 12px;
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            border-radius: 10px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             background: #f5f5f7;
-            transition: all 0.2s;
-            min-width: min(150px, 40vw);
+            min-width: min(120px, 40vw);
         }
         
         .add-player .apple-btn {
-            padding: clamp(0.7rem, 2.5vw, 1rem) clamp(1rem, 4vw, 1.8rem);
+            padding: clamp(0.6rem, 2.5vw, 0.9rem) clamp(0.8rem, 3vw, 1.2rem);
             background: #007aff;
             border-color: #007aff;
             color: white;
-            font-weight: 500;
-            white-space: nowrap;
         }
         
         /* Горизонтальный список игроков */
         .players-list {
             display: grid;
             gap: var(--gap);
-            margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
-            overflow-x: visible;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            margin-bottom: clamp(1rem, 3vw, 2rem);
+            overflow-x: auto;
+            overflow-y: visible;
+            grid-template-columns: repeat(auto-fill, minmax(min(var(--card-min-width), 100%), 1fr));
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Адаптация для разных устройств */
+        
+        /* Телефоны в вертикальной ориентации */
+        @media (orientation: portrait) {
+            .players-list {
+                grid-template-columns: 1fr !important;
+                overflow-x: visible;
+            }
+        }
+        
+        /* Телефоны в горизонтальной ориентации */
+        @media (orientation: landscape) and (max-width: 900px) {
+            .players-list {
+                grid-template-columns: repeat(2, 1fr) !important;
+                overflow-x: visible;
+            }
+            
+            .player-card {
+                min-width: 0;
+            }
+            
+            .player-name {
+                font-size: clamp(0.8rem, 2.5vw, 1rem);
+            }
+            
+            .stat-value {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+            
+            .color-btn {
+                width: clamp(1.8rem, 6vw, 2.2rem);
+                height: clamp(1.8rem, 6vw, 2.2rem);
+                font-size: clamp(0.7rem, 3vw, 0.9rem);
+            }
+        }
+        
+        /* Очень маленькие телефоны в горизонтальной ориентации */
+        @media (orientation: landscape) and (max-width: 600px) {
+            .players-list {
+                gap: 0.4rem;
+            }
+            
+            .player-card {
+                padding: 0.6rem;
+            }
+            
+            .player-stats {
+                gap: 0.2rem;
+            }
+            
+            .stat-block {
+                padding: 0.2rem 0.1rem;
+            }
+            
+            .stat-label {
+                font-size: 0.55rem;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+            }
+            
+            .action-btn {
+                padding: 0.3rem 0;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Планшеты в горизонтальной ориентации */
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .players-list {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        
+        /* Небольшие ноутбуки */
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .players-list {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+        
+        /* Большие экраны */
+        @media (min-width: 1367px) and (max-width: 1600px) {
+            .players-list {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+        
+        /* Очень большие экраны */
+        @media (min-width: 1601px) {
+            .players-list {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
         }
         
         /* Карточка игрока */
         .player-card {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: clamp(0.8rem, 2vw, 1.2rem);
-            padding: clamp(0.8rem, 2.5vw, 1.2rem);
+            border-radius: clamp(0.7rem, 2vw, 1rem);
+            padding: clamp(0.7rem, 2vw, 1rem);
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            gap: clamp(0.8rem, 2vw, 1.2rem);
+            gap: clamp(0.6rem, 2vw, 1rem);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            min-width: var(--card-min-width);
+            width: 100%;
         }
         
         .player-header {
@@ -358,34 +341,32 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e6e6e8;
-            padding-bottom: clamp(0.5rem, 1.5vw, 0.8rem);
+            padding-bottom: clamp(0.4rem, 1.5vw, 0.6rem);
         }
         
         .player-name {
-            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             font-weight: 600;
             color: #1d1d1f;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: min(150px, 30vw);
+            max-width: 70%;
         }
         
         .player-remove {
             background: none;
             border: none;
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: clamp(1rem, 4vw, 1.3rem);
             color: #86868b;
             cursor: pointer;
-            padding: 0.2rem 0.5rem;
-            border-radius: 8px;
-            transition: all 0.2s;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
         }
         
-        /* Статистика */
         .player-stats {
             display: flex;
-            gap: clamp(0.3rem, 1vw, 0.6rem);
+            gap: clamp(0.3rem, 1vw, 0.5rem);
             justify-content: space-between;
         }
         
@@ -393,64 +374,62 @@
             flex: 1;
             text-align: center;
             background: #ffffff;
-            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
-            padding: clamp(0.3rem, 1.5vw, 0.6rem) 0.2rem;
+            border-radius: clamp(0.4rem, 1.5vw, 0.7rem);
+            padding: clamp(0.3rem, 1.5vw, 0.5rem) 0.2rem;
             border: 1px solid #e6e6e8;
         }
         
         .stat-label {
-            font-size: clamp(0.6rem, 2vw, 0.75rem);
+            font-size: clamp(0.5rem, 2vw, 0.7rem);
             font-weight: 500;
             color: #86868b;
             text-transform: uppercase;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.1rem;
         }
         
         .stat-value {
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-size: clamp(1.1rem, 5vw, 1.6rem);
             font-weight: 600;
             line-height: 1.2;
         }
         
-        /* Основные кнопки */
         .player-actions {
             display: flex;
             flex-direction: column;
-            gap: clamp(0.3rem, 1vw, 0.6rem);
+            gap: clamp(0.3rem, 1vw, 0.5rem);
         }
         
         .action-row {
             display: flex;
-            gap: clamp(0.3rem, 1vw, 0.6rem);
+            gap: clamp(0.3rem, 1vw, 0.5rem);
         }
         
         .action-btn {
             flex: 1;
-            padding: clamp(0.6rem, 2.5vw, 0.9rem) 0;
+            padding: clamp(0.5rem, 2vw, 0.8rem) 0;
             border: none;
-            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            border-radius: clamp(0.4rem, 1.5vw, 0.7rem);
+            font-size: clamp(0.8rem, 3vw, 1rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             color: white;
         }
         
-        /* Цветные кнопки */
         .color-buttons {
             display: flex;
-            gap: clamp(0.3rem, 1vw, 0.5rem);
+            gap: clamp(0.2rem, 1vw, 0.4rem);
             justify-content: space-between;
             margin-top: 0.2rem;
         }
         
         .color-btn {
-            width: clamp(2.2rem, 8vw, 3rem);
-            height: clamp(2.2rem, 8vw, 3rem);
+            width: clamp(2rem, 7vw, 2.5rem);
+            height: clamp(2rem, 7vw, 2.5rem);
             border-radius: 50%;
             border: none;
             font-weight: 600;
-            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+            font-size: clamp(0.8rem, 3.5vw, 1.1rem);
             color: white;
             cursor: pointer;
             transition: all 0.2s;
@@ -462,92 +441,89 @@
         
         /* Нижняя панель */
         .bottom-panel {
-            padding: 0 clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: 0 clamp(1rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem);
             display: flex;
-            gap: clamp(1rem, 3vw, 1.8rem);
+            gap: clamp(0.8rem, 3vw, 1.5rem);
             flex-wrap: wrap;
         }
         
         .table-panel {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: clamp(0.8rem, 2vw, 1.2rem);
-            padding: clamp(1rem, 3vw, 1.5rem);
-            flex: 1 1 min(280px, 100%);
-            min-width: min(280px, 90vw);
+            border-radius: clamp(0.7rem, 2vw, 1rem);
+            padding: clamp(0.8rem, 3vw, 1.2rem);
+            flex: 1 1 min(250px, 100%);
+            min-width: min(250px, 90vw);
         }
         
         .calculate-btn {
             background: #007aff;
             color: white;
             border: none;
-            border-radius: clamp(0.6rem, 1.5vw, 0.8rem);
-            padding: clamp(0.8rem, 3vw, 1.2rem) clamp(1rem, 4vw, 1.8rem);
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            border-radius: clamp(0.5rem, 1.5vw, 0.7rem);
+            padding: clamp(0.7rem, 3vw, 1rem) clamp(0.8rem, 4vw, 1.5rem);
+            font-size: clamp(0.8rem, 3vw, 1rem);
             font-weight: 600;
             width: 100%;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
-        /* Результаты */
         .results-section {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: clamp(0.8rem, 2vw, 1.2rem);
-            padding: clamp(1rem, 3vw, 1.5rem);
-            flex: 2 1 min(400px, 100%);
-            min-width: min(300px, 90vw);
+            border-radius: clamp(0.7rem, 2vw, 1rem);
+            padding: clamp(0.8rem, 3vw, 1.2rem);
+            flex: 2 1 min(350px, 100%);
+            min-width: min(280px, 90vw);
         }
         
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         
         .results-table th {
             text-align: left;
-            padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.3rem, 1vw, 0.5rem);
-            font-size: clamp(0.6rem, 2vw, 0.8rem);
+            padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.2rem, 1vw, 0.4rem);
+            font-size: clamp(0.55rem, 2vw, 0.7rem);
             font-weight: 600;
             color: #6e6e73;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         
         .results-table td {
-            padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.3rem, 1vw, 0.5rem);
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.2rem, 1vw, 0.4rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
         }
         
         .result-total {
             display: flex;
             justify-content: space-between;
             background: #e6e6e8;
-            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
-            padding: clamp(0.6rem, 2vw, 0.9rem) clamp(0.8rem, 3vw, 1.2rem);
+            border-radius: clamp(0.5rem, 1.5vw, 0.7rem);
+            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.7rem, 3vw, 1rem);
             font-weight: 600;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            margin-top: 1rem;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            margin-top: 0.8rem;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
         
         /* Футер */
         .footer {
             background: #fafafc;
             border-top: 1px solid #e6e6e8;
-            padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(0.6rem, 2.5vw, 1rem) clamp(1rem, 4vw, 2rem);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: clamp(0.8rem, 2vw, 1.2rem);
+            gap: clamp(0.6rem, 2vw, 1rem);
         }
         
         .total-balls {
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             color: #1d1d1f;
             font-weight: 500;
         }
@@ -555,18 +531,17 @@
         .reset-btn {
             background: none;
             border: 1px solid #d2d2d6;
-            border-radius: 10px;
-            padding: clamp(0.4rem, 2vw, 0.7rem) clamp(0.8rem, 3vw, 1.3rem);
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            border-radius: 8px;
+            padding: clamp(0.3rem, 2vw, 0.6rem) clamp(0.6rem, 3vw, 1rem);
+            font-size: clamp(0.6rem, 2.5vw, 0.8rem);
             font-weight: 500;
             color: #ff3b30;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
         .footer-note {
             color: #86868b;
-            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            font-size: clamp(0.6rem, 2vw, 0.8rem);
             text-align: center;
             width: 100%;
         }
@@ -698,14 +673,11 @@
 
 <script>
 (function() {
-    // Состояние - пустой массив
     let players = [];
     
-    // Ссылки на инпуты
     const ballCostInput = document.getElementById('ballCostInput');
     const tableCostInput = document.getElementById('tableCostInput');
     
-    // ===== ФУНКЦИИ СОХРАНЕНИЯ =====
     function saveToStorage() {
         try {
             const gameData = {
@@ -714,9 +686,8 @@
                 tableCost: parseInt(tableCostInput.value) || 1000
             };
             localStorage.setItem('kolhozGameData', JSON.stringify(gameData));
-            console.log('✅ Данные сохранены');
         } catch (e) {
-            console.log('❌ Ошибка сохранения:', e);
+            console.log('Ошибка сохранения:', e);
         }
     }
     
@@ -725,43 +696,31 @@
             const saved = localStorage.getItem('kolhozGameData');
             if (saved) {
                 const gameData = JSON.parse(saved);
-                
-                // Загружаем игроков
                 if (gameData.players && Array.isArray(gameData.players)) {
                     players = gameData.players;
                 }
-                
-                // Загружаем стоимость шара
                 if (gameData.ballCost) {
                     ballCostInput.value = gameData.ballCost;
                 }
-                
-                // Загружаем стоимость стола
                 if (gameData.tableCost) {
                     tableCostInput.value = gameData.tableCost;
                 }
-                
-                console.log('✅ Данные загружены');
             }
         } catch (e) {
-            console.log('❌ Ошибка загрузки:', e);
+            console.log('Ошибка загрузки:', e);
         }
     }
     
     function clearStorage() {
-        if (confirm('Очистить все сохраненные данные? Это действие нельзя отменить.')) {
+        if (confirm('Очистить все сохраненные данные?')) {
             localStorage.removeItem('kolhozGameData');
-            // Сбрасываем и текущие данные
             players = [];
             ballCostInput.value = 50;
             tableCostInput.value = 1000;
             renderPlayers();
-            console.log('🗑️ Сохраненные данные очищены');
         }
     }
-    // ===== КОНЕЦ ФУНКЦИЙ СОХРАНЕНИЯ =====
     
-    // Получение текущих значений
     function getBallCost() {
         return parseInt(ballCostInput.value) || 50;
     }
@@ -770,13 +729,11 @@
         return parseInt(tableCostInput.value) || 1000;
     }
     
-    // Предыдущий игрок
     function getPreviousPlayerIndex(currentIndex) {
         if (players.length === 0) return -1;
         return (currentIndex - 1 + players.length) % players.length;
     }
     
-    // Обновление порядка
     function updateOrderDisplay() {
         const orderDisplay = document.getElementById('orderDisplay');
         if (players.length === 0) {
@@ -787,42 +744,34 @@
         orderDisplay.innerText = names;
     }
     
-    // Общее количество забитых
     function getTotalScored() {
         return players.reduce((sum, p) => sum + p.scored, 0);
     }
     
-    // Обновление общего количества
     function updateTotalBalls() {
         const total = getTotalScored();
         document.getElementById('totalBalls').innerText = `Всего забито: ${total}`;
     }
     
-    // Форматирование числа
     function formatNumber(value) {
         if (value > 0) return '+' + value;
         return value.toString();
     }
     
-    // Скрыть результаты
     function hideResults() {
         document.getElementById('resultsSection').style.display = 'none';
     }
     
-    // Показать результаты
     function showResults() {
         document.getElementById('resultsSection').style.display = 'block';
     }
     
-    // Сохранение итогов игроков (total) и обнуление scored
     function resetScoredKeepTotal() {
         players.forEach(p => {
-            // Сохраняем total, но scored сбрасываем в 0
             p.scored = 0;
         });
     }
     
-    // Отрисовка игроков
     function renderPlayers() {
         const container = document.getElementById('playersList');
         
@@ -879,7 +828,6 @@
         saveToStorage();
     }
     
-    // Защита от XSS
     function escapeHtml(unsafe) {
         return unsafe.replace(/[&<>"]/g, function(m) {
             if (m === '&') return '&amp;';
@@ -890,7 +838,6 @@
         });
     }
     
-    // Обработка действий с игроками
     function handlePlayerAction(playerId, action) {
         const playerIndex = players.findIndex(p => p.id == playerId);
         if (playerIndex === -1) return;
@@ -902,51 +849,33 @@
             case 'plus':
                 player.scored += 1;
                 player.total += 1;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total -= 1;
-                }
+                if (prevIndex !== -1) players[prevIndex].total -= 1;
                 break;
-                
             case 'minus':
                 player.scored -= 1;
                 player.total -= 1;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total += 1;
-                }
+                if (prevIndex !== -1) players[prevIndex].total += 1;
                 break;
-                
             case 'add2':
                 player.scored += 2;
                 player.total += 2;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total -= 2;
-                }
+                if (prevIndex !== -1) players[prevIndex].total -= 2;
                 break;
-                
             case 'add3':
                 player.scored += 3;
                 player.total += 3;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total -= 3;
-                }
+                if (prevIndex !== -1) players[prevIndex].total -= 3;
                 break;
-                
             case 'add4':
                 player.scored += 4;
                 player.total += 4;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total -= 4;
-                }
+                if (prevIndex !== -1) players[prevIndex].total -= 4;
                 break;
-                
             case 'add5':
                 player.scored += 5;
                 player.total += 5;
-                if (prevIndex !== -1) {
-                    players[prevIndex].total -= 5;
-                }
+                if (prevIndex !== -1) players[prevIndex].total -= 5;
                 break;
-                
             case 'remove':
                 players = players.filter(p => p.id != playerId);
                 renderPlayers();
@@ -956,12 +885,9 @@
         renderPlayers();
     }
     
-    // Перемешивание
     function shufflePlayers() {
         if (players.length <= 1) return;
-        
         resetScoredKeepTotal();
-        
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -969,16 +895,13 @@
         renderPlayers();
     }
     
-    // Реверс
     function reversePlayers() {
         if (players.length <= 1) return;
-        
         resetScoredKeepTotal();
         players.reverse();
         renderPlayers();
     }
     
-    // Расчет
     function calculateResults() {
         if (players.length === 0) {
             alert('Добавьте игроков для расчета');
@@ -997,12 +920,7 @@
         const results = players.map(player => {
             const ballsMoney = player.total * ballCost;
             const totalMoney = tableShare + ballsMoney;
-            return {
-                name: player.name,
-                tableShare: tableShare,
-                ballsMoney: ballsMoney,
-                total: totalMoney
-            };
+            return { name: player.name, tableShare, ballsMoney, total: totalMoney };
         });
         
         let rowsHtml = '';
@@ -1030,7 +948,6 @@
         saveToStorage();
     }
     
-    // Обработчики событий
     document.addEventListener('click', function(e) {
         const target = e.target.closest('button');
         if (!target) return;
@@ -1125,7 +1042,6 @@
     
     document.getElementById('clearStorageBtn').addEventListener('click', clearStorage);
     
-    // Загрузка и инициализация
     loadFromStorage();
     renderPlayers();
 })();
