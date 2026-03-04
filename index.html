@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Kolhoz Score · Apple Style</title>
+    <title>Kolhoz Score · Адаптивный</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+        
+        :root {
+            /* Базовые относительные размеры */
+            font-size: 16px;
+            --container-padding: clamp(1rem, 3vw, 2rem);
+            --border-radius: clamp(1rem, 2vw, 1.5rem);
+            --gap: clamp(0.75rem, 1.5vw, 1.25rem);
         }
         
         body {
@@ -18,126 +26,158 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: var(--container-padding);
         }
         
         .calculator {
-            width: 100%;
+            width: min(100%, 2000px);
             background: #ffffff;
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
         
-        /* Вертикальная ориентация (портрет) */
-        @media (orientation: portrait) {
-            .calculator {
-                max-width: 680px;
-                margin: 0 auto;
-            }
-            
+        /* Используем container queries вместо медиа-запросов по ориентации */
+        .players-section {
+            container-type: inline-size;
+            container-name: players;
+        }
+        
+        /* Адаптация на основе ширины контейнера */
+        @container players (max-width: 800px) {
             .players-list {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
+                grid-template-columns: repeat(2, 1fr) !important;
             }
             
             .player-card {
-                max-width: 100%;
-            }
-            
-            .player-name {
-                max-width: none;
-                font-size: 20px;
+                padding: calc(var(--container-padding) * 0.8);
             }
             
             .stat-value {
-                font-size: 28px;
+                font-size: clamp(1.2rem, 5vw, 1.8rem);
             }
             
             .color-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 18px;
+                width: clamp(2.5rem, 8vw, 3.5rem);
+                height: clamp(2.5rem, 8vw, 3.5rem);
+                font-size: clamp(1rem, 4vw, 1.3rem);
             }
         }
         
-        /* Горизонтальная ориентация (ландшафт) */
-        @media (orientation: landscape) {
-            .calculator {
-                max-width: 2000px;
-                width: 95%;
-                margin: 0 auto;
+        @container players (max-width: 500px) {
+            .players-list {
+                grid-template-columns: 1fr !important;
             }
             
+            .player-name {
+                font-size: clamp(1.1rem, 5vw, 1.3rem);
+            }
+            
+            .stat-value {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+            }
+            
+            .color-btn {
+                width: clamp(3rem, 10vw, 4rem);
+                height: clamp(3rem, 10vw, 4rem);
+                font-size: clamp(1.1rem, 5vw, 1.4rem);
+            }
+            
+            .action-btn {
+                font-size: clamp(0.9rem, 4vw, 1.1rem);
+                padding: clamp(0.5rem, 3vw, 0.8rem) 0;
+            }
+        }
+        
+        @container players (min-width: 1200px) {
+            .players-list {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+            
+            .player-card {
+                padding: clamp(1.2rem, 2vw, 1.8rem);
+            }
+        }
+        
+        @container players (min-width: 1600px) {
+            .players-list {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
+        }
+        
+        /* Резервные стили для браузеров без поддержки container queries */
+        @media (min-width: 1600px) {
+            .players-list {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
+        }
+        
+        @media (min-width: 1200px) and (max-width: 1599px) {
+            .players-list {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+        
+        @media (min-width: 800px) and (max-width: 1199px) {
             .players-list {
                 grid-template-columns: repeat(3, 1fr) !important;
             }
-            
-            .players-section {
-                padding: 24px 20px;
-            }
         }
         
-        /* Планшеты и маленькие экраны в ландшафте */
-        @media (orientation: landscape) and (max-width: 900px) {
+        @media (min-width: 500px) and (max-width: 799px) {
             .players-list {
                 grid-template-columns: repeat(2, 1fr) !important;
             }
         }
         
-        /* Очень широкие экраны */
-        @media (orientation: landscape) and (min-width: 1600px) {
+        @media (max-width: 499px) {
             .players-list {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 20px;
-            }
-            
-            .player-card {
-                padding: 22px 18px;
+                grid-template-columns: 1fr !important;
             }
         }
         
         /* Apple-style header */
         .header {
             background: #fafafc;
-            padding: 24px 30px;
+            padding: clamp(1.2rem, 3vw, 2rem) clamp(1.5rem, 4vw, 2.5rem);
             border-bottom: 1px solid #e6e6e8;
         }
         
         .header h1 {
-            font-size: 28px;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             font-weight: 600;
             color: #1d1d1f;
             letter-spacing: -0.5px;
-            margin-bottom: 4px;
+            margin-bottom: 0.25rem;
         }
         
         .header-sub {
             color: #86868b;
-            font-size: 15px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             font-weight: 400;
         }
         
         /* Панель управления */
         .control-panel {
             background: #ffffff;
-            padding: 20px 30px;
+            padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
             border-bottom: 1px solid #e6e6e8;
             display: flex;
             flex-wrap: wrap;
-            gap: 24px;
+            gap: clamp(1rem, 2vw, 1.8rem);
             align-items: flex-end;
         }
         
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            min-width: 200px;
+            gap: 0.4rem;
+            min-width: min(200px, 40vw);
+            flex: 1 1 auto;
         }
         
         .control-label {
-            font-size: 13px;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
             font-weight: 500;
             color: #6e6e73;
             letter-spacing: -0.2px;
@@ -151,6 +191,7 @@
             border-radius: 12px;
             border: 1px solid #e6e6e8;
             transition: all 0.2s;
+            width: 100%;
         }
         
         .control-input-wrapper:focus-within {
@@ -159,47 +200,37 @@
         }
         
         .control-input-wrapper input {
-            width: 100px;
-            padding: 12px 8px 12px 16px;
+            width: min(100px, 25vw);
+            padding: clamp(0.6rem, 2vw, 0.9rem) clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2vw, 0.9rem) clamp(0.8rem, 2vw, 1.2rem);
             border: none;
             background: transparent;
-            font-size: 17px;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             font-weight: 500;
             color: #1d1d1f;
             outline: none;
             text-align: center;
         }
         
-        .control-input-wrapper input[type="number"] {
-            -moz-appearance: textfield;
-        }
-        
-        .control-input-wrapper input[type="number"]::-webkit-outer-spin-button,
-        .control-input-wrapper input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        
         .control-unit {
-            padding-right: 16px;
+            padding-right: clamp(0.6rem, 2vw, 1rem);
             color: #86868b;
-            font-size: 15px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             font-weight: 400;
         }
         
         .control-buttons {
             display: flex;
-            gap: 4px;
-            margin-left: 4px;
+            gap: 0.25rem;
+            margin-left: 0.25rem;
         }
         
         .control-step-btn {
-            width: 36px;
-            height: 36px;
+            width: clamp(2rem, 6vw, 2.5rem);
+            height: clamp(2rem, 6vw, 2.5rem);
             border: none;
             background: #ffffff;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: clamp(1rem, 3vw, 1.3rem);
             font-weight: 600;
             color: #007aff;
             cursor: pointer;
@@ -223,125 +254,103 @@
         /* Панель порядка */
         .order-panel {
             background: #fafafc;
-            padding: 16px 30px;
+            padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 4vw, 2.5rem);
             border-bottom: 1px solid #e6e6e8;
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
             align-items: center;
         }
         
         .order-buttons {
             display: flex;
-            gap: 8px;
+            gap: 0.5rem;
         }
         
         .apple-btn {
             background: #ffffff;
             border: 1px solid #d2d2d6;
             border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 14px;
+            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             font-weight: 500;
             color: #1d1d1f;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 0.4rem;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-        }
-        
-        .apple-btn:hover {
-            background: #f5f5f7;
-            border-color: #b8b8bd;
-        }
-        
-        .apple-btn:active {
-            background: #e8e8ed;
-            transform: scale(0.98);
+            white-space: nowrap;
         }
         
         .order-display {
             background: #ffffff;
             border: 1px solid #e6e6e8;
             border-radius: 10px;
-            padding: 10px 18px;
-            font-size: 15px;
+            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             color: #1d1d1f;
             flex: 1;
+            min-width: min(200px, 50vw);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         
-        /* Список игроков - базовые стили */
+        /* Список игроков */
         .players-section {
-            padding: 24px 30px;
+            padding: clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 2.5rem);
             background: #ffffff;
         }
         
         .add-player {
             display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            max-width: 400px;
+            gap: clamp(0.5rem, 2vw, 1rem);
+            margin-bottom: clamp(1rem, 3vw, 2rem);
+            max-width: min(400px, 80vw);
         }
         
         .add-player input {
             flex: 1;
-            padding: 14px 18px;
+            padding: clamp(0.7rem, 2.5vw, 1rem) clamp(0.8rem, 3vw, 1.2rem);
             border: 1px solid #d2d2d6;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             background: #f5f5f7;
             transition: all 0.2s;
-        }
-        
-        .add-player input:focus {
-            outline: none;
-            border-color: #007aff;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+            min-width: min(150px, 40vw);
         }
         
         .add-player .apple-btn {
-            padding: 14px 24px;
+            padding: clamp(0.7rem, 2.5vw, 1rem) clamp(1rem, 4vw, 1.8rem);
             background: #007aff;
             border-color: #007aff;
             color: white;
             font-weight: 500;
+            white-space: nowrap;
         }
         
-        .add-player .apple-btn:hover {
-            background: #0062cc;
-            border-color: #0062cc;
-        }
-        
-        /* Горизонтальный список игроков - базовый */
+        /* Горизонтальный список игроков */
         .players-list {
             display: grid;
-            gap: 16px;
-            margin-bottom: 30px;
+            gap: var(--gap);
+            margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
             overflow-x: visible;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
         }
         
-        /* Карточка игрока - Apple style */
+        /* Карточка игрока */
         .player-card {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: 16px;
-            padding: 18px 14px;
+            border-radius: clamp(0.8rem, 2vw, 1.2rem);
+            padding: clamp(0.8rem, 2.5vw, 1.2rem);
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        }
-        
-        .player-card:hover {
-            border-color: #b8b8bd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
         }
         
         .player-header {
@@ -349,39 +358,34 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e6e6e8;
-            padding-bottom: 12px;
+            padding-bottom: clamp(0.5rem, 1.5vw, 0.8rem);
         }
         
         .player-name {
-            font-size: 18px;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
             font-weight: 600;
             color: #1d1d1f;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 150px;
+            max-width: min(150px, 30vw);
         }
         
         .player-remove {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             color: #86868b;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 0.2rem 0.5rem;
             border-radius: 8px;
             transition: all 0.2s;
-        }
-        
-        .player-remove:hover {
-            background: #f5f5f7;
-            color: #ff3b30;
         }
         
         /* Статистика */
         .player-stats {
             display: flex;
-            gap: 8px;
+            gap: clamp(0.3rem, 1vw, 0.6rem);
             justify-content: space-between;
         }
         
@@ -389,92 +393,64 @@
             flex: 1;
             text-align: center;
             background: #ffffff;
-            border-radius: 12px;
-            padding: 10px 4px;
+            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
+            padding: clamp(0.3rem, 1.5vw, 0.6rem) 0.2rem;
             border: 1px solid #e6e6e8;
         }
         
         .stat-label {
-            font-size: 11px;
+            font-size: clamp(0.6rem, 2vw, 0.75rem);
             font-weight: 500;
             color: #86868b;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 0.2rem;
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
             font-weight: 600;
             line-height: 1.2;
         }
         
-        .stat-value.scored {
-            color: #28cd41;
-        }
-        
-        .stat-value.total {
-            color: #1d1d1f;
-        }
-        
-        /* Основные кнопки действий (+1 и -1) */
+        /* Основные кнопки */
         .player-actions {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: clamp(0.3rem, 1vw, 0.6rem);
         }
         
         .action-row {
             display: flex;
-            gap: 8px;
+            gap: clamp(0.3rem, 1vw, 0.6rem);
         }
         
         .action-btn {
             flex: 1;
-            padding: 12px 0;
+            padding: clamp(0.6rem, 2.5vw, 0.9rem) 0;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             color: white;
         }
         
-        .action-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-plus {
-            background: #28cd41;
-        }
-        
-        .btn-plus:hover {
-            background: #22b33a;
-        }
-        
-        .btn-minus {
-            background: #ff9f0a;
-        }
-        
-        .btn-minus:hover {
-            background: #e68a00;
-        }
-        
-        /* Цветные кнопки для добавления нескольких шаров */
+        /* Цветные кнопки */
         .color-buttons {
             display: flex;
-            gap: 6px;
+            gap: clamp(0.3rem, 1vw, 0.5rem);
             justify-content: space-between;
-            margin-top: 4px;
+            margin-top: 0.2rem;
         }
         
         .color-btn {
-            width: 40px;
-            height: 40px;
+            width: clamp(2.2rem, 8vw, 3rem);
+            height: clamp(2.2rem, 8vw, 3rem);
             border-radius: 50%;
             border: none;
             font-weight: 600;
-            font-size: 16px;
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
             color: white;
             cursor: pointer;
             transition: all 0.2s;
@@ -484,183 +460,94 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
-        .color-btn:active {
-            transform: scale(0.92);
-        }
-        
-        .btn-yellow {
-            background: #ffcc00;
-            color: #1d1d1f;
-        }
-        
-        .btn-yellow:hover {
-            background: #e6b800;
-        }
-        
-        .btn-red {
-            background: #ff3b30;
-        }
-        
-        .btn-red:hover {
-            background: #e62e24;
-        }
-        
-        .btn-pink {
-            background: #ff66a3;
-        }
-        
-        .btn-pink:hover {
-            background: #e65994;
-        }
-        
-        .btn-black {
-            background: #1d1d1f;
-        }
-        
-        .btn-black:hover {
-            background: #000000;
-        }
-        
         /* Нижняя панель */
         .bottom-panel {
-            padding: 0 30px 24px 30px;
+            padding: 0 clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem);
             display: flex;
-            gap: 20px;
+            gap: clamp(1rem, 3vw, 1.8rem);
             flex-wrap: wrap;
         }
         
         .table-panel {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: 16px;
-            padding: 20px;
-            flex: 1;
-            min-width: 280px;
-        }
-        
-        .table-cost-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        
-        .table-cost-label {
-            font-weight: 500;
-            color: #1d1d1f;
-            font-size: 15px;
+            border-radius: clamp(0.8rem, 2vw, 1.2rem);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            flex: 1 1 min(280px, 100%);
+            min-width: min(280px, 90vw);
         }
         
         .calculate-btn {
             background: #007aff;
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 16px 24px;
-            font-size: 16px;
+            border-radius: clamp(0.6rem, 1.5vw, 0.8rem);
+            padding: clamp(0.8rem, 3vw, 1.2rem) clamp(1rem, 4vw, 1.8rem);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             font-weight: 600;
             width: 100%;
             cursor: pointer;
             transition: all 0.2s;
         }
         
-        .calculate-btn:hover {
-            background: #0062cc;
-        }
-        
-        .calculate-btn:active {
-            transform: scale(0.99);
-        }
-        
         /* Результаты */
         .results-section {
             background: #fafafc;
             border: 1px solid #e6e6e8;
-            border-radius: 16px;
-            padding: 20px;
-            flex: 2;
-            min-width: 400px;
-        }
-        
-        .results-title {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 16px;
-            color: #1d1d1f;
+            border-radius: clamp(0.8rem, 2vw, 1.2rem);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            flex: 2 1 min(400px, 100%);
+            min-width: min(300px, 90vw);
         }
         
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
         }
         
         .results-table th {
             text-align: left;
-            padding: 10px 8px;
-            font-size: 12px;
+            padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.3rem, 1vw, 0.5rem);
+            font-size: clamp(0.6rem, 2vw, 0.8rem);
             font-weight: 600;
             color: #6e6e73;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid #e6e6e8;
         }
         
         .results-table td {
-            padding: 10px 8px;
-            font-size: 14px;
-            border-bottom: 1px solid #e6e6e8;
-        }
-        
-        .results-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .results-table .name {
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-        
-        .results-table .number {
-            font-weight: 600;
-            text-align: right;
-        }
-        
-        .results-table .positive {
-            color: #28cd41;
-        }
-        
-        .results-table .negative {
-            color: #ff3b30;
+            padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.3rem, 1vw, 0.5rem);
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
         }
         
         .result-total {
             display: flex;
             justify-content: space-between;
             background: #e6e6e8;
-            border-radius: 10px;
-            padding: 12px 16px;
+            border-radius: clamp(0.5rem, 1.5vw, 0.8rem);
+            padding: clamp(0.6rem, 2vw, 0.9rem) clamp(0.8rem, 3vw, 1.2rem);
             font-weight: 600;
-            font-size: 15px;
-            margin-top: 16px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
         
         /* Футер */
         .footer {
             background: #fafafc;
             border-top: 1px solid #e6e6e8;
-            padding: 16px 30px;
+            padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1.5rem, 4vw, 2.5rem);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
         }
         
         .total-balls {
-            font-size: 15px;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             color: #1d1d1f;
             font-weight: 500;
         }
@@ -669,23 +556,44 @@
             background: none;
             border: 1px solid #d2d2d6;
             border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: clamp(0.4rem, 2vw, 0.7rem) clamp(0.8rem, 3vw, 1.3rem);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             font-weight: 500;
             color: #ff3b30;
             cursor: pointer;
             transition: all 0.2s;
         }
         
-        .reset-btn:hover {
-            background: #fff1f0;
-            border-color: #ff3b30;
-        }
-        
         .footer-note {
             color: #86868b;
-            font-size: 13px;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            text-align: center;
+            width: 100%;
         }
+        
+        @media (min-width: 600px) {
+            .footer-note {
+                width: auto;
+            }
+        }
+        
+        /* Цвета кнопок */
+        .btn-plus { background: #28cd41; }
+        .btn-plus:hover { background: #22b33a; }
+        .btn-minus { background: #ff9f0a; }
+        .btn-minus:hover { background: #e68a00; }
+        .btn-yellow { background: #ffcc00; color: #1d1d1f; }
+        .btn-yellow:hover { background: #e6b800; }
+        .btn-red { background: #ff3b30; }
+        .btn-red:hover { background: #e62e24; }
+        .btn-pink { background: #ff66a3; }
+        .btn-pink:hover { background: #e65994; }
+        .btn-black { background: #1d1d1f; }
+        .btn-black:hover { background: #000000; }
+        .stat-value.scored { color: #28cd41; }
+        .stat-value.total { color: #1d1d1f; }
+        .results-table .positive { color: #28cd41; }
+        .results-table .negative { color: #ff3b30; }
     </style>
 </head>
 <body>
@@ -746,7 +654,7 @@
 
         <!-- Список игроков -->
         <div id="playersList" class="players-list">
-            <div style="grid-column:1/-1; text-align:center; padding:40px; color:#86868b;">Добавьте игроков для начала игры</div>
+            <div style="grid-column:1/-1; text-align:center; padding:2rem; color:#86868b;">Добавьте игроков для начала игры</div>
         </div>
     </div>
 
@@ -919,11 +827,11 @@
         const container = document.getElementById('playersList');
         
         if (players.length === 0) {
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#86868b;">Добавьте игроков для начала игры</div>';
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#86868b;">Добавьте игроков для начала игры</div>';
             updateOrderDisplay();
             updateTotalBalls();
             hideResults();
-            saveToStorage(); // Сохраняем изменения
+            saveToStorage();
             return;
         }
         
@@ -968,7 +876,7 @@
         updateOrderDisplay();
         updateTotalBalls();
         hideResults();
-        saveToStorage(); // Сохраняем изменения
+        saveToStorage();
     }
     
     // Защита от XSS
@@ -991,7 +899,7 @@
         const prevIndex = getPreviousPlayerIndex(playerIndex);
         
         switch (action) {
-            case 'plus': // +1: себе +1 scored и total, предыдущему -1 total
+            case 'plus':
                 player.scored += 1;
                 player.total += 1;
                 if (prevIndex !== -1) {
@@ -999,7 +907,7 @@
                 }
                 break;
                 
-            case 'minus': // -1: себе -1 scored и total, предыдущему +1 total
+            case 'minus':
                 player.scored -= 1;
                 player.total -= 1;
                 if (prevIndex !== -1) {
@@ -1007,7 +915,7 @@
                 }
                 break;
                 
-            case 'add2': // +2: себе +2 scored и total, предыдущему -2 total
+            case 'add2':
                 player.scored += 2;
                 player.total += 2;
                 if (prevIndex !== -1) {
@@ -1015,7 +923,7 @@
                 }
                 break;
                 
-            case 'add3': // +3: себе +3 scored и total, предыдущему -3 total
+            case 'add3':
                 player.scored += 3;
                 player.total += 3;
                 if (prevIndex !== -1) {
@@ -1023,7 +931,7 @@
                 }
                 break;
                 
-            case 'add4': // +4: себе +4 scored и total, предыдущему -4 total
+            case 'add4':
                 player.scored += 4;
                 player.total += 4;
                 if (prevIndex !== -1) {
@@ -1031,7 +939,7 @@
                 }
                 break;
                 
-            case 'add5': // +5: себе +5 scored и total, предыдущему -5 total
+            case 'add5':
                 player.scored += 5;
                 player.total += 5;
                 if (prevIndex !== -1) {
@@ -1048,14 +956,12 @@
         renderPlayers();
     }
     
-    // Перемешивание с сохранением total и обнулением scored
+    // Перемешивание
     function shufflePlayers() {
         if (players.length <= 1) return;
         
-        // Сохраняем текущие total, но scored сбрасываем
         resetScoredKeepTotal();
         
-        // Перемешиваем
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -1063,14 +969,11 @@
         renderPlayers();
     }
     
-    // Реверс с сохранением total и обнулением scored
+    // Реверс
     function reversePlayers() {
         if (players.length <= 1) return;
         
-        // Сохраняем текущие total, но scored сбрасываем
         resetScoredKeepTotal();
-        
-        // Разворачиваем
         players.reverse();
         renderPlayers();
     }
@@ -1089,9 +992,8 @@
         const grandTotalEl = document.getElementById('resultsGrandTotal');
         
         const tableShare = -Math.floor(tableCost / players.length);
-        const remainder = tableCost + tableShare * players.length; // остаток (положительный)
+        const remainder = tableCost + tableShare * players.length;
         
-        // Создаем массив результатов
         const results = players.map(player => {
             const ballsMoney = player.total * ballCost;
             const totalMoney = tableShare + ballsMoney;
@@ -1099,12 +1001,10 @@
                 name: player.name,
                 tableShare: tableShare,
                 ballsMoney: ballsMoney,
-                total: totalMoney,
-                totalValue: player.total
+                total: totalMoney
             };
         });
         
-        // Формируем HTML для таблицы
         let rowsHtml = '';
         results.forEach(r => {
             const totalClass = r.total >= 0 ? 'positive' : 'negative';
@@ -1127,10 +1027,10 @@
         `;
         
         showResults();
-        saveToStorage(); // Сохраняем после расчета
+        saveToStorage();
     }
     
-    // --- Обработчики событий ---
+    // Обработчики событий
     document.addEventListener('click', function(e) {
         const target = e.target.closest('button');
         if (!target) return;
@@ -1144,7 +1044,6 @@
         }
     });
     
-    // Добавление игрока
     document.getElementById('addPlayerBtn').addEventListener('click', function() {
         const input = document.getElementById('playerNameInput');
         const name = input.value.trim();
@@ -1161,17 +1060,15 @@
         });
         
         input.value = '';
-        renderPlayers(); // Сохранение внутри renderPlayers
+        renderPlayers();
     });
     
-    // Ввод с клавиатуры
     document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             document.getElementById('addPlayerBtn').click();
         }
     });
     
-    // Валидация ввода стоимости
     function validateBallCost(value) {
         if (isNaN(value) || value < 50) return 50;
         return Math.round(value / 50) * 50;
@@ -1192,7 +1089,6 @@
         saveToStorage();
     });
     
-    // Кнопки для стоимости шара
     document.getElementById('ballCostPlus').addEventListener('click', function() {
         ballCostInput.value = validateBallCost(parseInt(ballCostInput.value) + 50);
         saveToStorage();
@@ -1203,7 +1099,6 @@
         saveToStorage();
     });
     
-    // Кнопки для стоимости стола
     document.getElementById('tableCostPlus').addEventListener('click', function() {
         tableCostInput.value = validateTableCost(parseInt(tableCostInput.value) + 50);
         saveToStorage();
@@ -1214,39 +1109,24 @@
         saveToStorage();
     });
     
-    // Жеребьевка
-    document.getElementById('shuffleBtn').addEventListener('click', function() {
-        shufflePlayers();
-    });
-    
-    // Реверс
-    document.getElementById('reverseBtn').addEventListener('click', function() {
-        reversePlayers();
-    });
-    
-    // Расчет
+    document.getElementById('shuffleBtn').addEventListener('click', shufflePlayers);
+    document.getElementById('reverseBtn').addEventListener('click', reversePlayers);
     document.getElementById('calculateBtn').addEventListener('click', calculateResults);
     
-    // Сброс игры
     document.getElementById('resetGameBtn').addEventListener('click', function() {
         if (players.length > 0 && confirm('Сбросить счет всех игроков?')) {
             players.forEach(p => {
                 p.scored = 0;
                 p.total = 0;
             });
-            renderPlayers(); // Сохранение внутри renderPlayers
+            renderPlayers();
         }
     });
     
-    // Очистка сохранений
-    document.getElementById('clearStorageBtn').addEventListener('click', function() {
-        clearStorage();
-    });
+    document.getElementById('clearStorageBtn').addEventListener('click', clearStorage);
     
-    // Загружаем сохраненные данные при старте
+    // Загрузка и инициализация
     loadFromStorage();
-    
-    // Инициализация с пустым состоянием или загруженными данными
     renderPlayers();
 })();
 </script>
