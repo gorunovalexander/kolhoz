@@ -58,6 +58,28 @@
             font-weight: 400;
         }
         
+        /* Индикатор сохранения */
+        .save-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28cd41;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
         /* Панель управления */
         .control-panel {
             background: #ffffff;
@@ -93,6 +115,11 @@
             border: 1px solid #e6e6e8;
             transition: all 0.2s;
             width: 100%;
+        }
+        
+        .control-input-wrapper:focus-within {
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
         
         .control-input-wrapper input {
@@ -137,6 +164,16 @@
             border: 1px solid #d2d2d6;
         }
         
+        .control-step-btn:hover {
+            background: #f5f5f7;
+            border-color: #007aff;
+        }
+        
+        .control-step-btn:active {
+            background: #e8e8ed;
+            transform: scale(0.95);
+        }
+        
         /* Панель порядка */
         .order-panel {
             background: #fafafc;
@@ -167,6 +204,16 @@
             align-items: center;
             gap: 0.3rem;
             white-space: nowrap;
+        }
+        
+        .apple-btn:hover {
+            background: #f5f5f7;
+            border-color: #b8b8bd;
+        }
+        
+        .apple-btn:active {
+            background: #e8e8ed;
+            transform: scale(0.98);
         }
         
         .order-display {
@@ -204,6 +251,14 @@
             font-size: clamp(0.8rem, 2.5vw, 1rem);
             background: #f5f5f7;
             min-width: min(120px, 40vw);
+            transition: all 0.2s;
+        }
+        
+        .add-player input:focus {
+            outline: none;
+            border-color: #007aff;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
         
         .add-player .apple-btn {
@@ -211,6 +266,11 @@
             background: #007aff;
             border-color: #007aff;
             color: white;
+        }
+        
+        .add-player .apple-btn:hover {
+            background: #0062cc;
+            border-color: #0062cc;
         }
         
         /* Горизонтальный список игроков */
@@ -334,6 +394,12 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
             min-width: var(--card-min-width);
             width: 100%;
+            cursor: pointer;
+        }
+        
+        .player-card:hover {
+            border-color: #b8b8bd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
         }
         
         .player-header {
@@ -362,8 +428,15 @@
             cursor: pointer;
             padding: 0.2rem 0.4rem;
             border-radius: 6px;
+            transition: all 0.2s;
         }
         
+        .player-remove:hover {
+            background: #f5f5f7;
+            color: #ff3b30;
+        }
+        
+        /* Статистика */
         .player-stats {
             display: flex;
             gap: clamp(0.3rem, 1vw, 0.5rem);
@@ -393,6 +466,15 @@
             line-height: 1.2;
         }
         
+        .stat-value.scored {
+            color: #28cd41;
+        }
+        
+        .stat-value.total {
+            color: #1d1d1f;
+        }
+        
+        /* Основные кнопки действий */
         .player-actions {
             display: flex;
             flex-direction: column;
@@ -416,6 +498,27 @@
             color: white;
         }
         
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-plus {
+            background: #28cd41;
+        }
+        
+        .btn-plus:hover {
+            background: #22b33a;
+        }
+        
+        .btn-minus {
+            background: #ff9f0a;
+        }
+        
+        .btn-minus:hover {
+            background: #e68a00;
+        }
+        
+        /* Цветные кнопки */
         .color-buttons {
             display: flex;
             gap: clamp(0.2rem, 1vw, 0.4rem);
@@ -439,6 +542,43 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
+        .color-btn:active {
+            transform: scale(0.92);
+        }
+        
+        .btn-yellow {
+            background: #ffcc00;
+            color: #1d1d1f;
+        }
+        
+        .btn-yellow:hover {
+            background: #e6b800;
+        }
+        
+        .btn-red {
+            background: #ff3b30;
+        }
+        
+        .btn-red:hover {
+            background: #e62e24;
+        }
+        
+        .btn-pink {
+            background: #ff66a3;
+        }
+        
+        .btn-pink:hover {
+            background: #e65994;
+        }
+        
+        .btn-black {
+            background: #1d1d1f;
+        }
+        
+        .btn-black:hover {
+            background: #000000;
+        }
+        
         /* Нижняя панель */
         .bottom-panel {
             padding: 0 clamp(1rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem);
@@ -456,6 +596,21 @@
             min-width: min(250px, 90vw);
         }
         
+        .table-cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .table-cost-label {
+            font-weight: 500;
+            color: #1d1d1f;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
         .calculate-btn {
             background: #007aff;
             color: white;
@@ -466,8 +621,18 @@
             font-weight: 600;
             width: 100%;
             cursor: pointer;
+            transition: all 0.2s;
         }
         
+        .calculate-btn:hover {
+            background: #0062cc;
+        }
+        
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Результаты */
         .results-section {
             background: #fafafc;
             border: 1px solid #e6e6e8;
@@ -477,10 +642,17 @@
             min-width: min(280px, 90vw);
         }
         
+        .results-title {
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        
         .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         
         .results-table th {
@@ -490,11 +662,35 @@
             font-weight: 600;
             color: #6e6e73;
             text-transform: uppercase;
+            border-bottom: 1px solid #e6e6e8;
         }
         
         .results-table td {
             padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.2rem, 1vw, 0.4rem);
             font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            border-bottom: 1px solid #e6e6e8;
+        }
+        
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .results-table .name {
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        
+        .results-table .number {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .results-table .positive {
+            color: #28cd41;
+        }
+        
+        .results-table .negative {
+            color: #ff3b30;
         }
         
         .result-total {
@@ -505,9 +701,9 @@
             padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.7rem, 3vw, 1rem);
             font-weight: 600;
             font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-            margin-top: 0.8rem;
+            margin-top: 1rem;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
         
         /* Футер */
@@ -537,6 +733,16 @@
             font-weight: 500;
             color: #ff3b30;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .reset-btn:hover {
+            background: #fff1f0;
+            border-color: #ff3b30;
+        }
+        
+        .reset-btn:active {
+            transform: scale(0.98);
         }
         
         .footer-note {
@@ -551,24 +757,6 @@
                 width: auto;
             }
         }
-        
-        /* Цвета кнопок */
-        .btn-plus { background: #28cd41; }
-        .btn-plus:hover { background: #22b33a; }
-        .btn-minus { background: #ff9f0a; }
-        .btn-minus:hover { background: #e68a00; }
-        .btn-yellow { background: #ffcc00; color: #1d1d1f; }
-        .btn-yellow:hover { background: #e6b800; }
-        .btn-red { background: #ff3b30; }
-        .btn-red:hover { background: #e62e24; }
-        .btn-pink { background: #ff66a3; }
-        .btn-pink:hover { background: #e65994; }
-        .btn-black { background: #1d1d1f; }
-        .btn-black:hover { background: #000000; }
-        .stat-value.scored { color: #28cd41; }
-        .stat-value.total { color: #1d1d1f; }
-        .results-table .positive { color: #28cd41; }
-        .results-table .negative { color: #ff3b30; }
     </style>
 </head>
 <body>
@@ -584,7 +772,7 @@
         <div class="control-group">
             <div class="control-label">Стоимость шара</div>
             <div class="control-input-wrapper">
-                <input type="number" id="ballCostInput" value="50" step="50" min="50">
+                <input type="number" id="ballCostInput" value="50" step="50" min="50" max="10000">
                 <span class="control-unit">₽</span>
                 <div class="control-buttons">
                     <button class="control-step-btn" id="ballCostMinus">−</button>
@@ -596,7 +784,7 @@
         <div class="control-group">
             <div class="control-label">Стоимость стола</div>
             <div class="control-input-wrapper">
-                <input type="number" id="tableCostInput" value="0" step="50" min="0">
+                <input type="number" id="tableCostInput" value="0" step="50" min="0" max="100000">
                 <span class="control-unit">₽</span>
                 <div class="control-buttons">
                     <button class="control-step-btn" id="tableCostMinus">−</button>
@@ -623,7 +811,7 @@
     <div class="players-section">
         <!-- Добавление игрока -->
         <div class="add-player">
-            <input type="text" id="playerNameInput" placeholder="Имя игрока">
+            <input type="text" id="playerNameInput" placeholder="Имя игрока" autocomplete="off">
             <button class="apple-btn" id="addPlayerBtn">+ Добавить</button>
         </div>
 
@@ -671,24 +859,65 @@
     </div>
 </div>
 
+<!-- Индикатор сохранения -->
+<div class="save-indicator" id="saveIndicator">✓</div>
+
 <script>
 (function() {
+    // ===== СОСТОЯНИЕ =====
     let players = [];
     
     const ballCostInput = document.getElementById('ballCostInput');
     const tableCostInput = document.getElementById('tableCostInput');
+    const saveIndicator = document.getElementById('saveIndicator');
     
-    function saveToStorage() {
+    // Максимальные значения
+    const MAX_BALL_COST = 10000;
+    const MAX_TABLE_COST = 100000;
+    
+    // Таймер для debounce сохранения
+    let saveTimeout = null;
+    
+    // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+    function generatePlayerId() {
+        return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+    
+    function showSaveIndicator() {
+        saveIndicator.style.opacity = '1';
+        setTimeout(() => {
+            saveIndicator.style.opacity = '0';
+        }, 1500);
+    }
+    
+    // ===== ФУНКЦИИ СОХРАНЕНИЯ =====
+    function saveToStorage(showIndicator = true) {
         try {
             const gameData = {
-                players: players,
-                ballCost: parseInt(ballCostInput.value) || 50,
-                tableCost: parseInt(tableCostInput.value) || 1000
+                players: players.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    scored: p.scored,
+                    total: p.total
+                })),
+                ballCost: getBallCost(),
+                tableCost: getTableCost()
             };
             localStorage.setItem('kolhozGameData', JSON.stringify(gameData));
+            
+            if (showIndicator) {
+                showSaveIndicator();
+            }
         } catch (e) {
             console.log('Ошибка сохранения:', e);
         }
+    }
+    
+    function debounceSave() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveToStorage(true);
+        }, 500);
     }
     
     function loadFromStorage() {
@@ -696,41 +925,62 @@
             const saved = localStorage.getItem('kolhozGameData');
             if (saved) {
                 const gameData = JSON.parse(saved);
+                
+                // Загружаем игроков с проверкой структуры
                 if (gameData.players && Array.isArray(gameData.players)) {
-                    players = gameData.players;
+                    players = gameData.players
+                        .filter(p => p && typeof p === 'object')
+                        .map(p => ({
+                            id: p.id || generatePlayerId(),
+                            name: p.name || 'Без имени',
+                            scored: typeof p.scored === 'number' ? p.scored : 0,
+                            total: typeof p.total === 'number' ? p.total : 0
+                        }));
                 }
-                if (gameData.ballCost) {
-                    ballCostInput.value = gameData.ballCost;
+                
+                // Загружаем стоимость шара
+                if (gameData.ballCost !== undefined && !isNaN(gameData.ballCost)) {
+                    ballCostInput.value = Math.min(MAX_BALL_COST, Math.max(50, gameData.ballCost));
                 }
-                if (gameData.tableCost) {
-                    tableCostInput.value = gameData.tableCost;
+                
+                // Загружаем стоимость стола
+                if (gameData.tableCost !== undefined && !isNaN(gameData.tableCost)) {
+                    tableCostInput.value = Math.min(MAX_TABLE_COST, Math.max(0, gameData.tableCost));
                 }
             }
         } catch (e) {
             console.log('Ошибка загрузки:', e);
+            // При ошибке сбрасываем localStorage
+            localStorage.removeItem('kolhozGameData');
         }
     }
     
     function clearStorage() {
-        if (confirm('Очистить все сохраненные данные?')) {
+        if (confirm('Очистить все сохраненные данные? Это действие нельзя отменить.')) {
             localStorage.removeItem('kolhozGameData');
             players = [];
             ballCostInput.value = 50;
-            tableCostInput.value = 1000;
+            tableCostInput.value = 0;
             renderPlayers();
+            showSaveIndicator();
         }
     }
     
+    // ===== ПОЛУЧЕНИЕ ЗНАЧЕНИЙ =====
     function getBallCost() {
-        return parseInt(ballCostInput.value) || 50;
+        let value = parseInt(ballCostInput.value);
+        return isNaN(value) ? 50 : Math.min(MAX_BALL_COST, Math.max(50, value));
     }
     
     function getTableCost() {
-        return parseInt(tableCostInput.value) || 1000;
+        let value = parseInt(tableCostInput.value);
+        return isNaN(value) ? 0 : Math.min(MAX_TABLE_COST, Math.max(0, value));
     }
     
+    // ===== ЛОГИКА ИГРОКОВ =====
     function getPreviousPlayerIndex(currentIndex) {
         if (players.length === 0) return -1;
+        if (currentIndex < 0 || currentIndex >= players.length) return -1;
         return (currentIndex - 1 + players.length) % players.length;
     }
     
@@ -745,7 +995,7 @@
     }
     
     function getTotalScored() {
-        return players.reduce((sum, p) => sum + p.scored, 0);
+        return players.reduce((sum, p) => sum + (p.scored || 0), 0);
     }
     
     function updateTotalBalls() {
@@ -755,7 +1005,8 @@
     
     function formatNumber(value) {
         if (value > 0) return '+' + value;
-        return value.toString();
+        if (value < 0) return value.toString();
+        return '0';
     }
     
     function hideResults() {
@@ -772,6 +1023,7 @@
         });
     }
     
+    // ===== ОТРИСОВКА =====
     function renderPlayers() {
         const container = document.getElementById('playersList');
         
@@ -780,13 +1032,16 @@
             updateOrderDisplay();
             updateTotalBalls();
             hideResults();
-            saveToStorage();
+            debounceSave();
             return;
         }
         
-        let html = '';
+        // Используем DocumentFragment для оптимизации
+        const fragment = document.createDocumentFragment();
+        const tempDiv = document.createElement('div');
+        
         players.forEach((player, index) => {
-            html += `
+            tempDiv.innerHTML = `
                 <div class="player-card" data-id="${player.id}" data-index="${index}">
                     <div class="player-header">
                         <span class="player-name">${escapeHtml(player.name)}</span>
@@ -819,13 +1074,19 @@
                     </div>
                 </div>
             `;
+            
+            while (tempDiv.firstChild) {
+                fragment.appendChild(tempDiv.firstChild);
+            }
         });
         
-        container.innerHTML = html;
+        container.innerHTML = '';
+        container.appendChild(fragment);
+        
         updateOrderDisplay();
         updateTotalBalls();
         hideResults();
-        saveToStorage();
+        debounceSave();
     }
     
     function escapeHtml(unsafe) {
@@ -838,6 +1099,7 @@
         });
     }
     
+    // ===== ДЕЙСТВИЯ С ИГРОКАМИ =====
     function handlePlayerAction(playerId, action) {
         const playerIndex = players.findIndex(p => p.id == playerId);
         if (playerIndex === -1) return;
@@ -877,14 +1139,18 @@
                 if (prevIndex !== -1) players[prevIndex].total -= 5;
                 break;
             case 'remove':
-                players = players.filter(p => p.id != playerId);
-                renderPlayers();
+                const playerName = players.find(p => p.id == playerId)?.name;
+                if (confirm(`Удалить игрока ${playerName}?`)) {
+                    players = players.filter(p => p.id != playerId);
+                    renderPlayers();
+                }
                 return;
         }
         
         renderPlayers();
     }
     
+    // ===== ПЕРЕМЕШИВАНИЕ И РЕВЕРС =====
     function shufflePlayers() {
         if (players.length <= 1) return;
         resetScoredKeepTotal();
@@ -902,6 +1168,7 @@
         renderPlayers();
     }
     
+    // ===== РАСЧЕТ =====
     function calculateResults() {
         if (players.length === 0) {
             alert('Добавьте игроков для расчета');
@@ -945,9 +1212,29 @@
         `;
         
         showResults();
-        saveToStorage();
+        debounceSave();
     }
     
+    // ===== ВАЛИДАЦИЯ =====
+    function validateBallCost(value) {
+        if (isNaN(value) || value < 50) return 50;
+        if (value > MAX_BALL_COST) return MAX_BALL_COST;
+        return Math.round(value / 50) * 50;
+    }
+    
+    function validateTableCost(value) {
+        if (isNaN(value)) return 0;
+        if (value < 0) return 0;
+        if (value > MAX_TABLE_COST) return MAX_TABLE_COST;
+        if (value === 0) return 0;
+        
+        let rounded = Math.round(value / 50) * 50;
+        // Если value от 1 до 24, rounded = 0 -> округляем вверх до 50
+        if (rounded === 0 && value > 0) return 50;
+        return rounded;
+    }
+    
+    // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
     document.addEventListener('click', function(e) {
         const target = e.target.closest('button');
         if (!target) return;
@@ -961,6 +1248,7 @@
         }
     });
     
+    // Добавление игрока
     document.getElementById('addPlayerBtn').addEventListener('click', function() {
         const input = document.getElementById('playerNameInput');
         const name = input.value.trim();
@@ -969,8 +1257,14 @@
             return;
         }
         
+        // Проверка на дубликаты
+        if (players.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+            alert('Игрок с таким именем уже существует');
+            return;
+        }
+        
         players.push({
-            id: Date.now() + Math.random(),
+            id: generatePlayerId(),
             name: name,
             scored: 0,
             total: 0
@@ -978,6 +1272,7 @@
         
         input.value = '';
         renderPlayers();
+        input.focus(); // Автофокус для быстрого добавления следующего
     });
     
     document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
@@ -986,60 +1281,65 @@
         }
     });
     
-    function validateBallCost(value) {
-        if (isNaN(value) || value < 50) return 50;
-        return Math.round(value / 50) * 50;
-    }
-    
-    function validateTableCost(value) {
-    if (isNaN(value)) return 0;
-    if (value < 0) return 0;
-    // Округляем до ближайшего 50, но 0 остается 0
-    if (value === 0) return 0;
-    return Math.round(value / 50) * 50;
-    }
-    
+    // Изменение стоимости
     ballCostInput.addEventListener('change', function() {
         this.value = validateBallCost(parseInt(this.value));
-        saveToStorage();
+        debounceSave();
+    });
+    
+    ballCostInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            this.blur();
+        }
     });
     
     tableCostInput.addEventListener('change', function() {
-    let value = this.value.trim() === '' ? 0 : parseInt(this.value);
-    this.value = validateTableCost(value);
-    saveToStorage();
+        let value = this.value.trim() === '' ? 0 : parseInt(this.value);
+        this.value = validateTableCost(value);
+        debounceSave();
     });
     
+    tableCostInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            this.blur();
+        }
+    });
+    
+    // Кнопки +/- для шара
     document.getElementById('ballCostPlus').addEventListener('click', function() {
-        ballCostInput.value = validateBallCost(parseInt(ballCostInput.value) + 50);
-        saveToStorage();
+        let currentValue = parseInt(ballCostInput.value) || 50;
+        ballCostInput.value = validateBallCost(currentValue + 50);
+        debounceSave();
     });
     
     document.getElementById('ballCostMinus').addEventListener('click', function() {
-        ballCostInput.value = validateBallCost(parseInt(ballCostInput.value) - 50);
-        saveToStorage();
+        let currentValue = parseInt(ballCostInput.value) || 50;
+        ballCostInput.value = validateBallCost(currentValue - 50);
+        debounceSave();
     });
     
+    // Кнопки +/- для стола
     document.getElementById('tableCostPlus').addEventListener('click', function() {
-    let currentValue = parseInt(tableCostInput.value) || 0;
-    tableCostInput.value = validateTableCost(currentValue + 50);
-    saveToStorage();
+        let currentValue = parseInt(tableCostInput.value) || 0;
+        tableCostInput.value = validateTableCost(currentValue + 50);
+        debounceSave();
     });
     
     document.getElementById('tableCostMinus').addEventListener('click', function() {
-    let currentValue = parseInt(tableCostInput.value) || 0;
-    // Разрешаем уходить в 0 и ниже не опускаемся
-    let newValue = Math.max(0, currentValue - 50);
-    tableCostInput.value = validateTableCost(newValue);
-    saveToStorage();
+        let currentValue = parseInt(tableCostInput.value) || 0;
+        let newValue = Math.max(0, currentValue - 50);
+        tableCostInput.value = validateTableCost(newValue);
+        debounceSave();
     });
     
+    // Основные кнопки
     document.getElementById('shuffleBtn').addEventListener('click', shufflePlayers);
     document.getElementById('reverseBtn').addEventListener('click', reversePlayers);
     document.getElementById('calculateBtn').addEventListener('click', calculateResults);
     
+    // Сброс игры
     document.getElementById('resetGameBtn').addEventListener('click', function() {
-        if (players.length > 0 && confirm('Сбросить счет всех игроков?')) {
+        if (players.length > 0 && confirm('Сбросить счет всех игроков? Это обнулит забитые шары и итоговый счет.')) {
             players.forEach(p => {
                 p.scored = 0;
                 p.total = 0;
@@ -1048,14 +1348,13 @@
         }
     });
     
+    // Очистка сохранений
     document.getElementById('clearStorageBtn').addEventListener('click', clearStorage);
     
+    // Инициализация
     loadFromStorage();
     renderPlayers();
 })();
 </script>
 </body>
 </html>
-
-
-
