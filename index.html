@@ -596,7 +596,7 @@
         <div class="control-group">
             <div class="control-label">Стоимость стола</div>
             <div class="control-input-wrapper">
-                <input type="number" id="tableCostInput" value="1000" step="50" min="50">
+                <input type="number" id="tableCostInput" value="0" step="50" min="0">
                 <span class="control-unit">₽</span>
                 <div class="control-buttons">
                     <button class="control-step-btn" id="tableCostMinus">−</button>
@@ -992,8 +992,11 @@
     }
     
     function validateTableCost(value) {
-        if (isNaN(value) || value < 50) return 50;
-        return Math.round(value / 50) * 50;
+    if (isNaN(value)) return 0;
+    if (value < 0) return 0;
+    // Округляем до ближайшего 50, но 0 остается 0
+    if (value === 0) return 0;
+    return Math.round(value / 50) * 50;
     }
     
     ballCostInput.addEventListener('change', function() {
@@ -1002,8 +1005,9 @@
     });
     
     tableCostInput.addEventListener('change', function() {
-        this.value = validateTableCost(parseInt(this.value));
-        saveToStorage();
+    let value = this.value.trim() === '' ? 0 : parseInt(this.value);
+    this.value = validateTableCost(value);
+    saveToStorage();
     });
     
     document.getElementById('ballCostPlus').addEventListener('click', function() {
@@ -1017,13 +1021,17 @@
     });
     
     document.getElementById('tableCostPlus').addEventListener('click', function() {
-        tableCostInput.value = validateTableCost(parseInt(tableCostInput.value) + 50);
-        saveToStorage();
+    let currentValue = parseInt(tableCostInput.value) || 0;
+    tableCostInput.value = validateTableCost(currentValue + 50);
+    saveToStorage();
     });
     
     document.getElementById('tableCostMinus').addEventListener('click', function() {
-        tableCostInput.value = validateTableCost(parseInt(tableCostInput.value) - 50);
-        saveToStorage();
+    let currentValue = parseInt(tableCostInput.value) || 0;
+    // Разрешаем уходить в 0 и ниже не опускаемся
+    let newValue = Math.max(0, currentValue - 50);
+    tableCostInput.value = validateTableCost(newValue);
+    saveToStorage();
     });
     
     document.getElementById('shuffleBtn').addEventListener('click', shufflePlayers);
@@ -1048,5 +1056,6 @@
 </script>
 </body>
 </html>
+
 
 
