@@ -1454,50 +1454,73 @@
     }
     
     // ===== ДЕЙСТВИЯ С ИГРОКАМИ =====
-    function handlePlayerAction(playerId, action, ballIndex) {
-        const playerIndex = players.findIndex(p => p.id == playerId);
-        if (playerIndex === -1) return;
-        
-        const player = players[playerIndex];
-        const prevIndex = getPreviousPlayerIndex(playerIndex);
-        
-        if (action === 'colorBall' && ballIndex !== undefined) {
-            const ball = colorBalls[ballIndex];
-            if (ball) {
-                // Увеличиваем scored и total
-                player.scored = (player.scored || 0) + ball.points;
-                player.total = (player.total || 0) + ball.points;
-                // У предыдущего игрока уменьшаем total
-                if (prevIndex !== -1) players[prevIndex].total -= ball.points;
-                // Обновляем partyScore (равен scored в рамках текущей партии)
-                player.partyScore = player.scored;
+function handlePlayerAction(playerId, action, ballIndex) {
+    const playerIndex = players.findIndex(p => p.id == playerId);
+    if (playerIndex === -1) return;
+    
+    const player = players[playerIndex];
+    const prevIndex = getPreviousPlayerIndex(playerIndex);
+    
+    if (action === 'colorBall' && ballIndex !== undefined) {
+        const ball = colorBalls[ballIndex];
+        if (ball) {
+            // Текущий игрок: +очки к scored и total
+            player.scored = (player.scored || 0) + ball.points;
+            player.total = (player.total || 0) + ball.points;
+            
+            // Предыдущий игрок: -очки ТОЛЬКО из total
+            if (prevIndex !== -1) {
+                players[prevIndex].total -= ball.points;
+                // НЕ меняем partyScore у предыдущего!
             }
-        } else {
-            switch (action) {
-                case 'plus':
-                    player.scored = (player.scored || 0) + 1;
-                    player.total = (player.total || 0) + 1;
-                    if (prevIndex !== -1) players[prevIndex].total -= 1;
-                    player.partyScore = player.scored;
-                    break;
-                case 'minus':
-                    player.scored = (player.scored || 0) - 1;
-                    player.total = (player.total || 0) - 1;
-                    if (prevIndex !== -1) players[prevIndex].total += 1;
-                    player.partyScore = player.scored;
-                    break;
-                case 'remove':
-                    const playerName = players.find(p => p.id == playerId)?.name;
-                    if (confirm(`Удалить игрока ${playerName}?`)) {
-                        players = players.filter(p => p.id != playerId);
-                        renderPlayers();
-                    }
-                    return;
-            }
+            
+            // Обновляем partyScore текущего игрока (равен scored)
+            player.partyScore = player.scored;
         }
-        
-        renderPlayers();
+    } else {
+        switch (action) {
+            case 'plus':
+                // Текущий игрок: +1 к scored и total
+                player.scored = (player.scored || 0) + 1;
+                player.total = (player.total || 0) + 1;
+                
+                // Предыдущий игрок: -1 ТОЛЬКО из total
+                if (prevIndex !== -1) {
+                    players[prevIndex].total -= 1;
+                    // НЕ меняем partyScore у предыдущего!
+                }
+                
+                // Обновляем partyScore текущего игрока
+                player.partyScore = player.scored;
+                break;
+                
+            case 'minus':
+                // Текущий игрок: -1 к scored и total
+                player.scored = (player.scored || 0) - 1;
+                player.total = (player.total || 0) - 1;
+                
+                // Предыдущий игрок: +1 ТОЛЬКО из total
+                if (prevIndex !== -1) {
+                    players[prevIndex].total += 1;
+                    // НЕ меняем partyScore у предыдущего!
+                }
+                
+                // Обновляем partyScore текущего игрока
+                player.partyScore = player.scored;
+                break;
+                
+            case 'remove':
+                const playerName = players.find(p => p.id == playerId)?.name;
+                if (confirm(`Удалить игрока ${playerName}?`)) {
+                    players = players.filter(p => p.id != playerId);
+                    renderPlayers();
+                }
+                return;
+        }
     }
+    
+    renderPlayers();
+}
     
     // ===== ПЕРЕМЕШИВАНИЕ, РЕВЕРС И ПЕРЕМЕЩЕНИЕ =====
     function shufflePlayers() {
@@ -1757,3 +1780,4 @@
 </script>
 </body>
 </html>
+
