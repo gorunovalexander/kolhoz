@@ -377,6 +377,7 @@
             background: #f5f5f7;
             padding: 0.2rem 0.5rem;
             border-radius: 12px;
+            font-size: 0.8rem;
         }
         
         /* Горизонтальный список игроков */
@@ -404,6 +405,16 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
             min-width: var(--card-min-width);
             width: 100%;
+            cursor: pointer;
+        }
+        
+        .player-card:hover {
+            border-color: #b8b8bd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .player-card.selected {
+            border: 2px solid #007aff;
         }
         
         .player-header {
@@ -433,6 +444,11 @@
             padding: 0.2rem 0.4rem;
             border-radius: 6px;
             transition: all 0.2s;
+        }
+        
+        .player-remove:hover {
+            background: #f5f5f7;
+            color: #ff3b30;
         }
         
         /* Статистика */
@@ -509,8 +525,16 @@
             background: #28cd41;
         }
         
+        .btn-plus:hover {
+            background: #22b33a;
+        }
+        
         .btn-minus {
             background: #ff9f0a;
+        }
+        
+        .btn-minus:hover {
+            background: #e68a00;
         }
         
         /* Цветные кнопки */
@@ -519,15 +543,17 @@
             gap: clamp(0.2rem, 1vw, 0.4rem);
             justify-content: space-between;
             margin-top: 0.2rem;
+            flex-wrap: wrap;
         }
         
         .color-btn {
-            width: clamp(2rem, 7vw, 2.5rem);
+            flex: 1;
+            min-width: 40px;
             height: clamp(2rem, 7vw, 2.5rem);
-            border-radius: 50%;
+            border-radius: 20px;
             border: none;
             font-weight: 600;
-            font-size: clamp(0.8rem, 3.5vw, 1.1rem);
+            font-size: clamp(0.7rem, 3vw, 0.9rem);
             color: white;
             cursor: pointer;
             transition: all 0.2s;
@@ -535,10 +561,11 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 0 0.3rem;
         }
         
         .color-btn:active {
-            transform: scale(0.92);
+            transform: scale(0.95);
         }
         
         /* Нижняя панель */
@@ -558,6 +585,21 @@
             min-width: min(250px, 90vw);
         }
         
+        .table-cost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .table-cost-label {
+            font-weight: 500;
+            color: #1d1d1f;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
         .calculate-btn {
             background: #007aff;
             color: white;
@@ -571,6 +613,14 @@
             transition: all 0.2s;
         }
         
+        .calculate-btn:hover {
+            background: #0062cc;
+        }
+        
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+        
         /* Результаты */
         .results-section {
             background: #fafafc;
@@ -579,6 +629,13 @@
             padding: clamp(0.8rem, 3vw, 1.2rem);
             flex: 2 1 min(350px, 100%);
             min-width: min(280px, 90vw);
+        }
+        
+        .results-title {
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: 1rem;
+            color: #1d1d1f;
         }
         
         .results-table {
@@ -600,6 +657,28 @@
             padding: clamp(0.3rem, 1.5vw, 0.5rem) clamp(0.2rem, 1vw, 0.4rem);
             font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             border-bottom: 1px solid #e6e6e8;
+        }
+        
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .results-table .name {
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        
+        .results-table .number {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .results-table .positive {
+            color: #28cd41;
+        }
+        
+        .results-table .negative {
+            color: #ff3b30;
         }
         
         .result-total {
@@ -625,148 +704,44 @@
             gap: clamp(0.6rem, 2vw, 1rem);
         }
         
+        .total-balls {
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            color: #1d1d1f;
+            font-weight: 500;
+        }
+        
+        .reset-btn {
+            background: none;
+            border: 1px solid #d2d2d6;
+            border-radius: 8px;
+            padding: clamp(0.3rem, 2vw, 0.6rem) clamp(0.6rem, 3vw, 1rem);
+            font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+            font-weight: 500;
+            color: #ff3b30;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .reset-btn:hover {
+            background: #fff1f0;
+            border-color: #ff3b30;
+        }
+        
+        .reset-btn:active {
+            transform: scale(0.98);
+        }
+        
         .footer-note {
             color: #86868b;
             font-size: clamp(0.6rem, 2vw, 0.8rem);
-        }
-        
-        /* Pop-up стили */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        
-        .popup-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .popup-content {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .popup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .popup-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #1d1d1f;
-        }
-        
-        .popup-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #86868b;
-        }
-        
-        .color-ball-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            background: #f5f5f7;
-            border-radius: 10px;
-        }
-        
-        .color-ball-preview {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .color-ball-inputs {
-            flex: 1;
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .color-ball-inputs input[type="color"] {
-            width: 50px;
-            height: 40px;
-            border: 1px solid #d2d2d6;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        
-        .color-ball-inputs input[type="number"] {
-            width: 70px;
-            padding: 0.5rem;
-            border: 1px solid #d2d2d6;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        
-        .color-ball-remove {
-            background: #ff3b30;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.3rem 0.8rem;
-            cursor: pointer;
-        }
-        
-        .add-color-ball-btn {
-            background: #007aff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.8rem;
+            text-align: center;
             width: 100%;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-bottom: 1rem;
         }
         
-        .popup-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .popup-footer button {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        
-        .popup-save {
-            background: #007aff;
-            color: white;
-        }
-        
-        .popup-cancel {
-            background: #e6e6e8;
-            color: #1d1d1f;
+        @media (min-width: 600px) {
+            .footer-note {
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -911,13 +886,153 @@
     </div>
 </div>
 
+<style>
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.popup-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.popup-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #86868b;
+}
+
+.color-ball-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    background: #f5f5f7;
+    border-radius: 10px;
+}
+
+.color-ball-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.color-ball-inputs {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.color-ball-inputs input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: 1px solid #d2d2d6;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.color-ball-inputs input[type="number"] {
+    width: 70px;
+    padding: 0.5rem;
+    border: 1px solid #d2d2d6;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.color-ball-remove {
+    background: #ff3b30;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+}
+
+.add-color-ball-btn {
+    background: #007aff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem;
+    width: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.popup-footer button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.popup-save {
+    background: #007aff;
+    color: white;
+}
+
+.popup-cancel {
+    background: #e6e6e8;
+    color: #1d1d1f;
+}
+</style>
+
 <script>
 (function() {
     // ===== СОСТОЯНИЕ =====
     let players = [];
-    let partyHistory = []; // История партий
-    let selectedPlayerIndex = -1; // Для перемещения стрелками
-    let colorBalls = []; // Настраиваемые цветные шары
+    let partyHistory = [];
+    let selectedPlayerIndex = -1;
+    let colorBalls = [];
     
     const ballCostInput = document.getElementById('ballCostInput');
     const tableCostInput = document.getElementById('tableCostInput');
@@ -959,15 +1074,16 @@
         
         const partySnapshot = {
             timestamp: new Date().toLocaleString(),
-            scores: players.map(p => ({
+            players: players.map(p => ({
                 name: p.name,
+                scored: p.scored || 0,
                 partyScore: p.partyScore || 0,
-                total: p.total
+                total: p.total || 0
             }))
         };
         
-        partyHistory.unshift(partySnapshot); // Добавляем в начало
-        if (partyHistory.length > 20) partyHistory.pop(); // Храним максимум 20 записей
+        partyHistory.unshift(partySnapshot);
+        if (partyHistory.length > 20) partyHistory.pop();
         
         renderHistory();
         saveToStorage();
@@ -988,9 +1104,9 @@
                         <span>${party.timestamp}</span>
                     </div>
                     <div class="history-scores">
-                        ${party.scores.map(s => `
+                        ${party.players.map(p => `
                             <span class="history-score">
-                                ${s.name}: ${s.partyScore} (итого: ${s.total})
+                                ${p.name}: заб.${p.scored} парт.${p.partyScore} итог.${p.total}
                             </span>
                         `).join('')}
                     </div>
@@ -1026,7 +1142,6 @@
         
         colorBallsList.innerHTML = html;
         
-        // Добавляем обработчики
         document.querySelectorAll('.color-input').forEach(input => {
             input.addEventListener('change', (e) => {
                 const index = e.target.dataset.index;
@@ -1074,7 +1189,7 @@
     
     saveColorsBtn.addEventListener('click', () => {
         popup.classList.remove('visible');
-        renderPlayers(); // Перерисовываем с новыми цветными кнопками
+        renderPlayers();
         saveToStorage();
     });
     
@@ -1085,9 +1200,9 @@
                 players: players.map(p => ({
                     id: p.id,
                     name: p.name,
-                    scored: p.scored,
+                    scored: p.scored || 0,
                     partyScore: p.partyScore || 0,
-                    total: p.total
+                    total: p.total || 0
                 })),
                 partyHistory: partyHistory,
                 colorBalls: colorBalls,
@@ -1117,7 +1232,6 @@
             if (saved) {
                 const gameData = JSON.parse(saved);
                 
-                // Загружаем игроков
                 if (gameData.players && Array.isArray(gameData.players)) {
                     players = gameData.players
                         .filter(p => p && typeof p === 'object')
@@ -1130,16 +1244,13 @@
                         }));
                 }
                 
-                // Загружаем историю
                 if (gameData.partyHistory && Array.isArray(gameData.partyHistory)) {
                     partyHistory = gameData.partyHistory;
                 }
                 
-                // Загружаем цветные шары
                 if (gameData.colorBalls && Array.isArray(gameData.colorBalls)) {
                     colorBalls = gameData.colorBalls;
                 } else {
-                    // Цветные шары по умолчанию
                     colorBalls = [
                         { color: '#ffcc00', points: 2 },
                         { color: '#ff3b30', points: 3 },
@@ -1148,7 +1259,6 @@
                     ];
                 }
                 
-                // Загружаем стоимость
                 if (gameData.ballCost !== undefined && !isNaN(gameData.ballCost)) {
                     ballCostInput.value = Math.min(MAX_BALL_COST, Math.max(50, gameData.ballCost));
                 }
@@ -1158,7 +1268,6 @@
                 
                 renderHistory();
             } else {
-                // Цветные шары по умолчанию при первом запуске
                 colorBalls = [
                     { color: '#ffcc00', points: 2 },
                     { color: '#ff3b30', points: 3 },
@@ -1241,16 +1350,16 @@
         document.getElementById('resultsSection').style.display = 'block';
     }
     
-    function resetPartyScores() {
+    function startNewParty() {
+        if (players.length === 0) return;
+        
+        // Сохраняем текущую партию в историю
+        savePartyToHistory();
+        
+        // Обнуляем scored и partyScore, total остается
         players.forEach(p => {
-            p.partyScore = p.scored || 0;
-        });
-    }
-    
-    function resetGameState() {
-        players.forEach(p => {
-            p.partyScore = 0;
             p.scored = 0;
+            p.partyScore = 0;
         });
     }
     
@@ -1271,19 +1380,22 @@
         const tempDiv = document.createElement('div');
         
         players.forEach((player, index) => {
-            // Добавляем partyScore если его нет
+            // Инициализация полей если их нет
+            if (player.scored === undefined) player.scored = 0;
             if (player.partyScore === undefined) player.partyScore = 0;
+            if (player.total === undefined) player.total = 0;
             
             let colorButtonsHtml = '';
             colorBalls.forEach((ball, i) => {
+                const textColor = ball.color === '#ffcc00' ? '#1d1d1f' : 'white';
                 colorButtonsHtml += `
-                    <button class="color-btn" style="background: ${ball.color}; color: ${ball.color === '#ffcc00' ? '#1d1d1f' : 'white'};" 
+                    <button class="color-btn" style="background: ${ball.color}; color: ${textColor};" 
                             data-action="colorBall" data-ball-index="${i}" data-id="${player.id}">+${ball.points}</button>
                 `;
             });
             
             tempDiv.innerHTML = `
-                <div class="player-card" data-id="${player.id}" data-index="${index}">
+                <div class="player-card ${index === selectedPlayerIndex ? 'selected' : ''}" data-id="${player.id}" data-index="${index}">
                     <div class="player-header">
                         <span class="player-name">${escapeHtml(player.name)}</span>
                         <button class="player-remove" data-action="remove" data-id="${player.id}">✕</button>
@@ -1292,15 +1404,15 @@
                     <div class="player-stats">
                         <div class="stat-block">
                             <div class="stat-label">Забито</div>
-                            <div class="stat-value scored">${player.scored || 0}</div>
+                            <div class="stat-value scored">${player.scored}</div>
                         </div>
                         <div class="stat-block">
                             <div class="stat-label">Партия</div>
-                            <div class="stat-value party">${player.partyScore || 0}</div>
+                            <div class="stat-value party">${player.partyScore}</div>
                         </div>
                         <div class="stat-block">
                             <div class="stat-label">Итого</div>
-                            <div class="stat-value total">${player.total || 0}</div>
+                            <div class="stat-value total">${player.total}</div>
                         </div>
                     </div>
                     
@@ -1352,9 +1464,13 @@
         if (action === 'colorBall' && ballIndex !== undefined) {
             const ball = colorBalls[ballIndex];
             if (ball) {
+                // Увеличиваем scored и total
                 player.scored = (player.scored || 0) + ball.points;
                 player.total = (player.total || 0) + ball.points;
+                // У предыдущего игрока уменьшаем total
                 if (prevIndex !== -1) players[prevIndex].total -= ball.points;
+                // Обновляем partyScore (равен scored в рамках текущей партии)
+                player.partyScore = player.scored;
             }
         } else {
             switch (action) {
@@ -1362,11 +1478,13 @@
                     player.scored = (player.scored || 0) + 1;
                     player.total = (player.total || 0) + 1;
                     if (prevIndex !== -1) players[prevIndex].total -= 1;
+                    player.partyScore = player.scored;
                     break;
                 case 'minus':
                     player.scored = (player.scored || 0) - 1;
                     player.total = (player.total || 0) - 1;
                     if (prevIndex !== -1) players[prevIndex].total += 1;
+                    player.partyScore = player.scored;
                     break;
                 case 'remove':
                     const playerName = players.find(p => p.id == playerId)?.name;
@@ -1384,8 +1502,7 @@
     // ===== ПЕРЕМЕШИВАНИЕ, РЕВЕРС И ПЕРЕМЕЩЕНИЕ =====
     function shufflePlayers() {
         if (players.length <= 1) return;
-        resetPartyScores(); // Сохраняем счет партии
-        savePartyToHistory(); // Сохраняем в историю
+        startNewParty(); // Сохраняем текущую партию и обнуляем scored/partyScore
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -1395,15 +1512,13 @@
     
     function reversePlayers() {
         if (players.length <= 1) return;
-        resetPartyScores(); // Сохраняем счет партии
-        savePartyToHistory(); // Сохраняем в историю
+        startNewParty(); // Сохраняем текущую партию и обнуляем scored/partyScore
         players.reverse();
         renderPlayers();
     }
     
-    // Перемещение игроков стрелками
     function movePlayerUp() {
-        if (selectedPlayerIndex === -1 || selectedPlayerIndex === 0) return;
+        if (selectedPlayerIndex <= 0 || selectedPlayerIndex >= players.length) return;
         
         const temp = players[selectedPlayerIndex];
         players[selectedPlayerIndex] = players[selectedPlayerIndex - 1];
@@ -1411,11 +1526,10 @@
         
         selectedPlayerIndex--;
         renderPlayers();
-        saveToStorage();
     }
     
     function movePlayerDown() {
-        if (selectedPlayerIndex === -1 || selectedPlayerIndex === players.length - 1) return;
+        if (selectedPlayerIndex < 0 || selectedPlayerIndex >= players.length - 1) return;
         
         const temp = players[selectedPlayerIndex];
         players[selectedPlayerIndex] = players[selectedPlayerIndex + 1];
@@ -1423,21 +1537,16 @@
         
         selectedPlayerIndex++;
         renderPlayers();
-        saveToStorage();
     }
     
     // Выбор игрока для перемещения
     document.addEventListener('click', function(e) {
         const playerCard = e.target.closest('.player-card');
-        if (playerCard) {
+        if (playerCard && !e.target.closest('button')) {
             const index = playerCard.dataset.index;
             if (index !== undefined) {
                 selectedPlayerIndex = parseInt(index);
-                // Визуально выделяем выбранного игрока
-                document.querySelectorAll('.player-card').forEach(card => {
-                    card.style.border = '1px solid #e6e6e8';
-                });
-                playerCard.style.border = '2px solid #007aff';
+                renderPlayers();
             }
         }
     });
@@ -1486,7 +1595,7 @@
         `;
         
         showResults();
-        debounceSave();
+        saveToStorage();
     }
     
     // ===== ВАЛИДАЦИЯ =====
@@ -1616,11 +1725,10 @@
     
     // Сброс игры
     document.getElementById('resetGameBtn').addEventListener('click', function() {
-        if (players.length > 0 && confirm('Сбросить счет всех игроков? Это обнулит забитые шары и итоговый счет.')) {
-            resetPartyScores(); // Сохраняем счет партии перед сбросом
-            savePartyToHistory(); // Сохраняем в историю
+        if (players.length > 0 && confirm('Сбросить счет всех игроков? Это обнулит забитые шары, счет партии и итоговый счет.')) {
             players.forEach(p => {
                 p.scored = 0;
+                p.partyScore = 0;
                 p.total = 0;
             });
             renderPlayers();
@@ -1636,8 +1744,8 @@
         const downBtn = document.getElementById('movePlayerDown');
         
         if (upBtn && downBtn) {
-            upBtn.disabled = selectedPlayerIndex <= 0;
-            downBtn.disabled = selectedPlayerIndex >= players.length - 1;
+            upBtn.disabled = selectedPlayerIndex <= 0 || selectedPlayerIndex >= players.length;
+            downBtn.disabled = selectedPlayerIndex < 0 || selectedPlayerIndex >= players.length - 1;
         }
     }, 100);
     
