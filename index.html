@@ -879,7 +879,7 @@
         }
         .timer-progress-fill {
             height: 100%;
-            width: 100%;
+            width: 0%;
             background: #28cd41;
             border-radius: 4px;
             transition: width 0.3s;
@@ -1265,7 +1265,8 @@
     let shotDuration = 30;
     let isPartyRunning = false;
     let isShotRunning = false;
-    let lastBeepSecond = -1; // для отслеживания пикания на 10,9,8...
+    let audioCtx = null;
+    let beepTimeout = null;
 
     // Максимальные значения
     const MAX_BALL_COST = 10000;
@@ -1967,31 +1968,82 @@
     }, 100);
     
     // ===== ТАЙМЕР =====
+    function initAudio() {
+        if (!audioCtx) {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                console.warn('AudioContext не поддерживается');
+            }
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume().catch(e => console.warn('Не удалось возобновить AudioContext'));
+        }
+    }
+
     function playBeep(freq = 800, dur = 150) {
         try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            initAudio();
+            if (!audioCtx) return;
+            
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             oscillator.frequency.value = freq;
             oscillator.type = 'sine';
-            gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + dur / 1000);
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+            console.warn('Ошибка воспроизведения звука:', e);
+        }
     }
 
     function playLongBeep() {
-        playBeep(600, 450);
-        setTimeout(() => playBeep(600, 450), 350);
-        setTimeout(() => playBeep(600, 450), 700);
+        // Три коротких звука с интервалом
+        playBeep(600, 400);
+        setTimeout(() => playBeep(600, 400), 350);
+        setTimeout(() => playBeep(600, 400), 700);
+        // И дополнительный длинный звук
+        setTimeout(() => {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.value = 500;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.6);
+            } catch (e) {}
+        }, 400);
     }
 
     function playPartyEndBeep() {
-        playBeep(400, 800);
-        setTimeout(() => playBeep(400, 800), 500);
-        setTimeout(() => playBeep(400, 800), 1000);
+        // Низкий длинный звук для окончания партии
+        try {
+            initAudio();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.frequency.value = 350;
+            osc.type = 'sawtooth';
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.2);
+        } catch (e) {}
+        // Дополнительно три коротких сигнала
+        setTimeout(() => playBeep(500, 300), 300);
+        setTimeout(() => playBeep(500, 300), 700);
+        setTimeout(() => playBeep(500, 300), 1100);
     }
 
     function updateTimerDisplay() {
@@ -2024,8 +2076,11 @@
             clearInterval(shotTimer);
             shotTimer = null;
         }
+        if (beepTimeout) {
+            clearTimeout(beepTimeout);
+            beepTimeout = null;
+        }
         isShotRunning = false;
-        lastBeepSecond = -1;
         shotSeconds = 0;
         updateShotDisplay();
     }
@@ -2040,15 +2095,21 @@
             return;
         }
 
+        // Активируем аудио при клике
+        initAudio();
+
         // Полная остановка предыдущего таймера
         if (shotTimer) {
             clearInterval(shotTimer);
             shotTimer = null;
         }
+        if (beepTimeout) {
+            clearTimeout(beepTimeout);
+            beepTimeout = null;
+        }
         
         // Сброс состояния
         isShotRunning = false;
-        lastBeepSecond = -1;
         
         // Установка нового времени
         shotSeconds = parseInt(shotTimeInput.value) || 30;
@@ -2056,31 +2117,33 @@
         isShotRunning = true;
         updateShotDisplay();
 
-        // Запуск нового таймера
-        shotTimer = setInterval(() => {
+        // Запуск таймера через рекурсивный setTimeout
+        function tick() {
+            if (!isShotRunning) return;
+            
             shotSeconds--;
             updateShotDisplay();
 
             // Пикание на 10, 9, 8, ..., 1
             if (shotSeconds > 0 && shotSeconds <= 10) {
-                if (shotSeconds !== lastBeepSecond) {
-                    lastBeepSecond = shotSeconds;
-                    playBeep(1200, 120);
-                }
+                playBeep(1200, 120);
             }
 
             // Достигли 0
             if (shotSeconds <= 0) {
-                clearInterval(shotTimer);
-                shotTimer = null;
                 isShotRunning = false;
-                lastBeepSecond = -1;
                 shotSeconds = 0;
                 updateShotDisplay();
-                // Длинный сигнал
                 playLongBeep();
+                return;
             }
-        }, 1000);
+
+            // Планируем следующий тик через 1 секунду
+            shotTimer = setTimeout(tick, 1000);
+        }
+
+        // Запускаем первый тик
+        shotTimer = setTimeout(tick, 1000);
     }
 
     function startParty() {
@@ -2089,6 +2152,9 @@
             stopShotTimer();
             return;
         }
+
+        // Активируем аудио при клике
+        initAudio();
 
         const mins = parseInt(partyTimeInput.value) || 10;
         partySeconds = mins * 60;
@@ -2116,6 +2182,7 @@
     // Обработчики таймера
     timerPopupBtn.addEventListener('click', () => {
         timerPopup.classList.add('visible');
+        initAudio(); // Активируем аудио при открытии попапа
         updateTimerDisplay();
         updateShotDisplay();
     });
