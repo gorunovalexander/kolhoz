@@ -778,17 +778,19 @@
             background: #ffffff;
             border-radius: 20px;
             padding: 2rem;
-            max-width: 600px;
+            max-width: 700px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .popup-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
         }
 
         .popup-title {
@@ -808,8 +810,7 @@
         .timer-settings {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
+            gap: 0.8rem;
         }
 
         .timer-setting {
@@ -833,36 +834,48 @@
             text-align: center;
         }
 
-        .timer-display {
-            text-align: center;
-            padding: 1rem 0;
+        /* Главный экран таймера — кнопка удара по центру */
+        .timer-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0;
+            gap: 0.5rem;
+            background: #fafafc;
+            border-radius: 16px;
+            border: 1px solid #e6e6e8;
         }
 
         .timer-party {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #6e6e73;
             font-weight: 500;
         }
 
         .timer-shot-wrapper {
-            position: relative;
-            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 0.2rem 0;
         }
 
         .timer-shot {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 700;
             color: #1d1d1f;
             letter-spacing: 2px;
+            line-height: 1.2;
         }
 
         .timer-progress-bar {
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: #e6e6e8;
             border-radius: 4px;
             overflow: hidden;
-            margin: 0.5rem 0 1rem 0;
+            margin: 0.3rem 0;
         }
         .timer-progress-fill {
             height: 100%;
@@ -872,11 +885,44 @@
             transition: width 0.3s;
         }
 
+        .btn-next-shot {
+            background: #ff9f0a;
+            color: #1d1d1f;
+            border: none;
+            border-radius: 16px;
+            padding: 0.8rem 2rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 159, 10, 0.35);
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-next-shot:hover {
+            background: #e68a00;
+            transform: scale(1.02);
+        }
+        .btn-next-shot:active {
+            transform: scale(0.97);
+        }
+        .btn-next-shot:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .timer-actions {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
-            margin: 1.5rem 0;
+            align-items: center;
         }
 
         .btn-start-party {
@@ -884,11 +930,12 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 0.9rem;
-            font-size: 1.1rem;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            width: 100%;
         }
         .btn-start-party:hover {
             background: #0062cc;
@@ -898,48 +945,18 @@
             cursor: not-allowed;
         }
 
-        .btn-next-shot {
-            background: #ff9f0a;
-            color: #1d1d1f;
-            border: none;
-            border-radius: 12px;
-            padding: 1.2rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3);
-        }
-        .btn-next-shot:hover {
-            background: #e68a00;
-        }
-        .btn-next-shot:active {
-            transform: scale(0.97);
-        }
-        .btn-next-shot:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
         .popup-footer {
             display: flex;
             justify-content: flex-end;
             gap: 1rem;
-            margin-top: 1.5rem;
         }
 
         .popup-footer button {
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
-        }
-
-        .popup-save {
-            background: #007aff;
-            color: white;
         }
 
         .popup-cancel {
@@ -1006,6 +1023,17 @@
             font-size: 1rem;
             cursor: pointer;
             margin-bottom: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .btn-next-shot {
+                font-size: 1.4rem;
+                padding: 0.6rem 1.2rem;
+                max-width: 220px;
+            }
+            .timer-shot {
+                font-size: 3.5rem;
+            }
         }
     </style>
 </head>
@@ -1174,7 +1202,8 @@
             </div>
         </div>
 
-        <div class="timer-display">
+        <!-- Главный блок таймера -->
+        <div class="timer-main">
             <div class="timer-party" id="timerPartyDisplay">⏳ Партия: 10:00</div>
             <div class="timer-shot-wrapper">
                 <div class="timer-shot" id="timerShotDisplay">--</div>
@@ -1182,11 +1211,11 @@
                     <div class="timer-progress-fill" id="timerProgressFill"></div>
                 </div>
             </div>
+            <button class="btn-next-shot" id="nextShotBtn">🎯</button>
         </div>
 
         <div class="timer-actions">
             <button class="btn-start-party" id="startPartyBtn">▶️ Запустить партию</button>
-            <button class="btn-next-shot" id="nextShotBtn">🎯 Следующий удар</button>
         </div>
 
         <div class="popup-footer">
@@ -1962,16 +1991,23 @@
             gainNode.connect(audioCtx.destination);
             oscillator.frequency.value = freq;
             oscillator.type = 'sine';
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + dur / 1000);
         } catch (e) { /* ignore */ }
     }
 
     function playLongBeep() {
-        for (let i = 0; i < 3; i++) {
-            setTimeout(() => playBeep(600, 300), i * 350);
-        }
+        playBeep(600, 450);
+        setTimeout(() => playBeep(600, 450), 350);
+        setTimeout(() => playBeep(600, 450), 700);
+    }
+
+    function playPartyEndBeep() {
+        // длинный звук другого тона
+        playBeep(400, 800);
+        setTimeout(() => playBeep(400, 800), 500);
+        setTimeout(() => playBeep(400, 800), 1000);
     }
 
     function updateTimerDisplay() {
@@ -1981,7 +2017,11 @@
     }
 
     function updateShotDisplay() {
-        timerShotDisplay.textContent = shotSeconds > 0 ? shotSeconds : '--';
+        if (shotSeconds > 0) {
+            timerShotDisplay.textContent = shotSeconds;
+        } else {
+            timerShotDisplay.textContent = '--';
+        }
         const progress = shotDuration > 0 ? (shotSeconds / shotDuration) * 100 : 100;
         timerProgressFill.style.width = Math.max(0, progress) + '%';
         if (progress > 60) timerProgressFill.style.background = '#28cd41';
@@ -2005,31 +2045,35 @@
             shotTimer = null;
         }
         isShotRunning = false;
-        nextShotBtn.textContent = '🎯 Следующий удар';
-        nextShotBtn.disabled = false;
         shotSeconds = 0;
         updateShotDisplay();
+        // не меняем текст кнопки — она всегда активна
     }
 
     function startShotTimer() {
+        // кнопка всегда активна, просто перезапускаем таймер
         if (!isPartyRunning) {
             alert('Сначала запустите партию!');
             return;
         }
-        if (isShotRunning) return;
         if (partySeconds <= 0) {
             alert('Время партии истекло!');
             return;
         }
 
+        // останавливаем текущий таймер удара, если есть
+        if (shotTimer) {
+            clearInterval(shotTimer);
+            shotTimer = null;
+            isShotRunning = false;
+        }
+
+        // устанавливаем новое время
         shotSeconds = parseInt(shotTimeInput.value) || 30;
         shotDuration = shotSeconds;
         isShotRunning = true;
-        nextShotBtn.textContent = '⏳ Удар...';
-        nextShotBtn.disabled = true;
         updateShotDisplay();
 
-        if (shotTimer) clearInterval(shotTimer);
         shotTimer = setInterval(() => {
             shotSeconds--;
             updateShotDisplay();
@@ -2043,8 +2087,6 @@
                 shotTimer = null;
                 isShotRunning = false;
                 playLongBeep();
-                nextShotBtn.textContent = '🎯 Следующий удар';
-                nextShotBtn.disabled = false;
                 shotSeconds = 0;
                 updateShotDisplay();
             }
@@ -2076,7 +2118,9 @@
                 partyTimer = null;
                 isPartyRunning = false;
                 startPartyBtn.textContent = '▶️ Запустить партию';
+                // останавливаем таймер удара
                 stopShotTimer();
+                playPartyEndBeep();
                 alert('⏰ Время партии истекло!');
             }
         }, 1000);
@@ -2091,7 +2135,6 @@
 
     function closeTimerPopup() {
         timerPopup.classList.remove('visible');
-        // не останавливаем таймеры при закрытии
     }
 
     closeTimerPopupBtn.addEventListener('click', closeTimerPopup);
