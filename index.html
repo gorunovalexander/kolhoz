@@ -82,6 +82,14 @@
             background: #4a48b5;
         }
         
+        .header-btn-timer {
+            background: #ff9f0a;
+            color: #1d1d1f;
+        }
+        .header-btn-timer:hover {
+            background: #e68a00;
+        }
+        
         /* Индикатор сохранения */
         .save-indicator {
             position: fixed;
@@ -743,6 +751,262 @@
                 width: auto;
             }
         }
+
+        /* Pop-up для таймера */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .popup-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .popup-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .popup-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #86868b;
+        }
+
+        .timer-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-setting {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .timer-setting label {
+            min-width: 140px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        .timer-setting input {
+            flex: 1;
+            min-width: 80px;
+            padding: 0.6rem;
+            border: 1px solid #d2d2d6;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .timer-display {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .timer-party {
+            font-size: 1.2rem;
+            color: #6e6e73;
+            font-weight: 500;
+        }
+
+        .timer-shot-wrapper {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .timer-shot {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: 2px;
+        }
+
+        .timer-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e6e6e8;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0 1rem 0;
+        }
+        .timer-progress-fill {
+            height: 100%;
+            width: 100%;
+            background: #28cd41;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .timer-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .btn-start-party {
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-start-party:hover {
+            background: #0062cc;
+        }
+        .btn-start-party:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next-shot {
+            background: #ff9f0a;
+            color: #1d1d1f;
+            border: none;
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3);
+        }
+        .btn-next-shot:hover {
+            background: #e68a00;
+        }
+        .btn-next-shot:active {
+            transform: scale(0.97);
+        }
+        .btn-next-shot:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .popup-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .popup-footer button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .popup-save {
+            background: #007aff;
+            color: white;
+        }
+
+        .popup-cancel {
+            background: #e6e6e8;
+            color: #1d1d1f;
+        }
+
+        .color-ball-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #f5f5f7;
+            border-radius: 10px;
+        }
+
+        .color-ball-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .color-ball-inputs {
+            flex: 1;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-ball-inputs input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: 1px solid #d2d2d6;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .color-ball-inputs input[type="number"] {
+            width: 70px;
+            padding: 0.5rem;
+            border: 1px solid #d2d2d6;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .color-ball-remove {
+            background: #ff3b30;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .add-color-ball-btn {
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -753,9 +1017,14 @@
             <h1>Kolhoz Score By Sanchez</h1>
             <div class="header-sub">Бильярдный калькулятор · Московская пирамида</div>
         </div>
-        <button class="header-btn" id="customizeColorsBtn">
-            <span>🎨</span> Настроить цветные шары
-        </button>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="header-btn header-btn-timer" id="timerPopupBtn">
+                <span>⏱️</span> Играть с таймером
+            </button>
+            <button class="header-btn" id="customizeColorsBtn">
+                <span>🎨</span> Настроить цветные шары
+            </button>
+        </div>
     </div>
 
     <!-- Панель стоимости -->
@@ -886,145 +1155,45 @@
     </div>
 </div>
 
-<style>
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-}
+<!-- Pop-up для таймера -->
+<div class="popup-overlay" id="timerPopup">
+    <div class="popup-content">
+        <div class="popup-header">
+            <div class="popup-title">⏱️ Таймер партии</div>
+            <button class="popup-close" id="closeTimerPopupBtn">&times;</button>
+        </div>
 
-.popup-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
+        <div class="timer-settings">
+            <div class="timer-setting">
+                <label>Время на партию (мин)</label>
+                <input type="number" id="partyTimeInput" value="10" min="1" max="60">
+            </div>
+            <div class="timer-setting">
+                <label>Время на удар (сек)</label>
+                <input type="number" id="shotTimeInput" value="30" min="5" max="120">
+            </div>
+        </div>
 
-.popup-content {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 2rem;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-}
+        <div class="timer-display">
+            <div class="timer-party" id="timerPartyDisplay">⏳ Партия: 10:00</div>
+            <div class="timer-shot-wrapper">
+                <div class="timer-shot" id="timerShotDisplay">--</div>
+                <div class="timer-progress-bar">
+                    <div class="timer-progress-fill" id="timerProgressFill"></div>
+                </div>
+            </div>
+        </div>
 
-.popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
+        <div class="timer-actions">
+            <button class="btn-start-party" id="startPartyBtn">▶️ Запустить партию</button>
+            <button class="btn-next-shot" id="nextShotBtn">🎯 Следующий удар</button>
+        </div>
 
-.popup-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #1d1d1f;
-}
-
-.popup-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #86868b;
-}
-
-.color-ball-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding: 0.8rem;
-    background: #f5f5f7;
-    border-radius: 10px;
-}
-
-.color-ball-preview {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.color-ball-inputs {
-    flex: 1;
-    display: flex;
-    gap: 0.5rem;
-}
-
-.color-ball-inputs input[type="color"] {
-    width: 50px;
-    height: 40px;
-    border: 1px solid #d2d2d6;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.color-ball-inputs input[type="number"] {
-    width: 70px;
-    padding: 0.5rem;
-    border: 1px solid #d2d2d6;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.color-ball-remove {
-    background: #ff3b30;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.3rem 0.8rem;
-    cursor: pointer;
-}
-
-.add-color-ball-btn {
-    background: #007aff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.8rem;
-    width: 100%;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-}
-
-.popup-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.popup-footer button {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.popup-save {
-    background: #007aff;
-    color: white;
-}
-
-.popup-cancel {
-    background: #e6e6e8;
-    color: #1d1d1f;
-}
-</style>
+        <div class="popup-footer">
+            <button class="popup-cancel" id="closeTimerPopupCancelBtn">Закрыть</button>
+        </div>
+    </div>
+</div>
 
 <script>
 (function() {
@@ -1041,14 +1210,37 @@
     const historyToggleBtn = document.getElementById('historyToggleBtn');
     const historyList = document.getElementById('historyList');
     
-    // Pop-up элементы
+    // Pop-up элементы (цветные шары)
     const popup = document.getElementById('colorBallsPopup');
     const closePopupBtn = document.getElementById('closePopupBtn');
     const cancelPopupBtn = document.getElementById('cancelPopupBtn');
     const saveColorsBtn = document.getElementById('saveColorsBtn');
     const addColorBallBtn = document.getElementById('addColorBallBtn');
     const colorBallsList = document.getElementById('colorBallsList');
-    
+
+    // Pop-up таймера
+    const timerPopup = document.getElementById('timerPopup');
+    const closeTimerPopupBtn = document.getElementById('closeTimerPopupBtn');
+    const closeTimerPopupCancelBtn = document.getElementById('closeTimerPopupCancelBtn');
+    const timerPopupBtn = document.getElementById('timerPopupBtn');
+    const partyTimeInput = document.getElementById('partyTimeInput');
+    const shotTimeInput = document.getElementById('shotTimeInput');
+    const timerPartyDisplay = document.getElementById('timerPartyDisplay');
+    const timerShotDisplay = document.getElementById('timerShotDisplay');
+    const timerProgressFill = document.getElementById('timerProgressFill');
+    const startPartyBtn = document.getElementById('startPartyBtn');
+    const nextShotBtn = document.getElementById('nextShotBtn');
+
+    // Таймер переменные
+    let partyTimer = null;
+    let shotTimer = null;
+    let partySeconds = 0;
+    let shotSeconds = 0;
+    let shotDuration = 30;
+    let partyDuration = 600;
+    let isPartyRunning = false;
+    let isShotRunning = false;
+
     // Максимальные значения
     const MAX_BALL_COST = 10000;
     const MAX_TABLE_COST = 100000;
@@ -1453,73 +1645,67 @@
         });
     }
     
-   // ===== ДЕЙСТВИЯ С ИГРОКАМИ =====
-function handlePlayerAction(playerId, action, ballIndex) {
-    const playerIndex = players.findIndex(p => p.id == playerId);
-    if (playerIndex === -1) return;
-    
-    const player = players[playerIndex];
-    const prevIndex = getPreviousPlayerIndex(playerIndex);
-    
-    if (action === 'colorBall' && ballIndex !== undefined) {
-        const ball = colorBalls[ballIndex];
-        if (ball) {
-            // Текущий игрок: +очки к scored, partyScore и total
-            player.scored = (player.scored || 0) + ball.points;
-            player.partyScore = (player.partyScore || 0) + ball.points;
-            player.total = (player.total || 0) + ball.points;
-            
-            // Предыдущий игрок: -очки из partyScore и total
-            if (prevIndex !== -1) {
-                players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) - ball.points;
-                players[prevIndex].total -= ball.points;
+    // ===== ДЕЙСТВИЯ С ИГРОКАМИ =====
+    function handlePlayerAction(playerId, action, ballIndex) {
+        const playerIndex = players.findIndex(p => p.id == playerId);
+        if (playerIndex === -1) return;
+        
+        const player = players[playerIndex];
+        const prevIndex = getPreviousPlayerIndex(playerIndex);
+        
+        if (action === 'colorBall' && ballIndex !== undefined) {
+            const ball = colorBalls[ballIndex];
+            if (ball) {
+                player.scored = (player.scored || 0) + ball.points;
+                player.partyScore = (player.partyScore || 0) + ball.points;
+                player.total = (player.total || 0) + ball.points;
+                
+                if (prevIndex !== -1) {
+                    players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) - ball.points;
+                    players[prevIndex].total -= ball.points;
+                }
+            }
+        } else {
+            switch (action) {
+                case 'plus':
+                    player.scored = (player.scored || 0) + 1;
+                    player.partyScore = (player.partyScore || 0) + 1;
+                    player.total = (player.total || 0) + 1;
+                    
+                    if (prevIndex !== -1) {
+                        players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) - 1;
+                        players[prevIndex].total -= 1;
+                    }
+                    break;
+                    
+                case 'minus':
+                    player.scored = (player.scored || 0) - 1;
+                    player.partyScore = (player.partyScore || 0) - 1;
+                    player.total = (player.total || 0) - 1;
+                    
+                    if (prevIndex !== -1) {
+                        players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) + 1;
+                        players[prevIndex].total += 1;
+                    }
+                    break;
+                    
+                case 'remove':
+                    const playerName = players.find(p => p.id == playerId)?.name;
+                    if (confirm(`Удалить игрока ${playerName}?`)) {
+                        players = players.filter(p => p.id != playerId);
+                        renderPlayers();
+                    }
+                    return;
             }
         }
-    } else {
-        switch (action) {
-            case 'plus':
-                // Текущий игрок: +1 к scored, partyScore и total
-                player.scored = (player.scored || 0) + 1;
-                player.partyScore = (player.partyScore || 0) + 1;
-                player.total = (player.total || 0) + 1;
-                
-                // Предыдущий игрок: -1 из partyScore и total
-                if (prevIndex !== -1) {
-                    players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) - 1;
-                    players[prevIndex].total -= 1;
-                }
-                break;
-                
-            case 'minus':
-                // Текущий игрок: -1 к scored, partyScore и total
-                player.scored = (player.scored || 0) - 1;
-                player.partyScore = (player.partyScore || 0) - 1;
-                player.total = (player.total || 0) - 1;
-                
-                // Предыдущий игрок: +1 к partyScore и total
-                if (prevIndex !== -1) {
-                    players[prevIndex].partyScore = (players[prevIndex].partyScore || 0) + 1;
-                    players[prevIndex].total += 1;
-                }
-                break;
-                
-            case 'remove':
-                const playerName = players.find(p => p.id == playerId)?.name;
-                if (confirm(`Удалить игрока ${playerName}?`)) {
-                    players = players.filter(p => p.id != playerId);
-                    renderPlayers();
-                }
-                return;
-        }
+        
+        renderPlayers();
     }
-    
-    renderPlayers();
-}
     
     // ===== ПЕРЕМЕШИВАНИЕ, РЕВЕРС И ПЕРЕМЕЩЕНИЕ =====
     function shufflePlayers() {
         if (players.length <= 1) return;
-        startNewParty(); // Сохраняем текущую партию и обнуляем scored/partyScore
+        startNewParty();
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -1529,7 +1715,7 @@ function handlePlayerAction(playerId, action, ballIndex) {
     
     function reversePlayers() {
         if (players.length <= 1) return;
-        startNewParty(); // Сохраняем текущую партию и обнуляем scored/partyScore
+        startNewParty();
         players.reverse();
         renderPlayers();
     }
@@ -1766,13 +1952,161 @@ function handlePlayerAction(playerId, action, ballIndex) {
         }
     }, 100);
     
+    // ===== ТАЙМЕР =====
+    function playBeep(freq = 800, dur = 150) {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.frequency.value = freq;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + dur / 1000);
+        } catch (e) { /* ignore */ }
+    }
+
+    function playLongBeep() {
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => playBeep(600, 300), i * 350);
+        }
+    }
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(partySeconds / 60);
+        const secs = partySeconds % 60;
+        timerPartyDisplay.textContent = `⏳ Партия: ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function updateShotDisplay() {
+        timerShotDisplay.textContent = shotSeconds > 0 ? shotSeconds : '--';
+        const progress = shotDuration > 0 ? (shotSeconds / shotDuration) * 100 : 100;
+        timerProgressFill.style.width = Math.max(0, progress) + '%';
+        if (progress > 60) timerProgressFill.style.background = '#28cd41';
+        else if (progress > 30) timerProgressFill.style.background = '#ff9f0a';
+        else timerProgressFill.style.background = '#ff3b30';
+    }
+
+    function stopPartyTimer() {
+        if (partyTimer) {
+            clearInterval(partyTimer);
+            partyTimer = null;
+        }
+        isPartyRunning = false;
+        startPartyBtn.textContent = '▶️ Запустить партию';
+        startPartyBtn.disabled = false;
+    }
+
+    function stopShotTimer() {
+        if (shotTimer) {
+            clearInterval(shotTimer);
+            shotTimer = null;
+        }
+        isShotRunning = false;
+        nextShotBtn.textContent = '🎯 Следующий удар';
+        nextShotBtn.disabled = false;
+        shotSeconds = 0;
+        updateShotDisplay();
+    }
+
+    function startShotTimer() {
+        if (!isPartyRunning) {
+            alert('Сначала запустите партию!');
+            return;
+        }
+        if (isShotRunning) return;
+        if (partySeconds <= 0) {
+            alert('Время партии истекло!');
+            return;
+        }
+
+        shotSeconds = parseInt(shotTimeInput.value) || 30;
+        shotDuration = shotSeconds;
+        isShotRunning = true;
+        nextShotBtn.textContent = '⏳ Удар...';
+        nextShotBtn.disabled = true;
+        updateShotDisplay();
+
+        if (shotTimer) clearInterval(shotTimer);
+        shotTimer = setInterval(() => {
+            shotSeconds--;
+            updateShotDisplay();
+
+            if (shotSeconds <= 10 && shotSeconds > 0) {
+                playBeep(1200, 100);
+            }
+
+            if (shotSeconds <= 0) {
+                clearInterval(shotTimer);
+                shotTimer = null;
+                isShotRunning = false;
+                playLongBeep();
+                nextShotBtn.textContent = '🎯 Следующий удар';
+                nextShotBtn.disabled = false;
+                shotSeconds = 0;
+                updateShotDisplay();
+            }
+        }, 1000);
+    }
+
+    function startParty() {
+        if (isPartyRunning) {
+            // остановка партии
+            stopPartyTimer();
+            stopShotTimer();
+            return;
+        }
+
+        const mins = parseInt(partyTimeInput.value) || 10;
+        partySeconds = mins * 60;
+        partyDuration = partySeconds;
+        isPartyRunning = true;
+        startPartyBtn.textContent = '⏹️ Остановить партию';
+        startPartyBtn.disabled = false;
+        updateTimerDisplay();
+
+        if (partyTimer) clearInterval(partyTimer);
+        partyTimer = setInterval(() => {
+            partySeconds--;
+            updateTimerDisplay();
+            if (partySeconds <= 0) {
+                clearInterval(partyTimer);
+                partyTimer = null;
+                isPartyRunning = false;
+                startPartyBtn.textContent = '▶️ Запустить партию';
+                stopShotTimer();
+                alert('⏰ Время партии истекло!');
+            }
+        }, 1000);
+    }
+
+    // Обработчики таймера
+    timerPopupBtn.addEventListener('click', () => {
+        timerPopup.classList.add('visible');
+        updateTimerDisplay();
+        updateShotDisplay();
+    });
+
+    function closeTimerPopup() {
+        timerPopup.classList.remove('visible');
+        // не останавливаем таймеры при закрытии
+    }
+
+    closeTimerPopupBtn.addEventListener('click', closeTimerPopup);
+    closeTimerPopupCancelBtn.addEventListener('click', closeTimerPopup);
+
+    startPartyBtn.addEventListener('click', startParty);
+    nextShotBtn.addEventListener('click', startShotTimer);
+
     // Инициализация
     loadFromStorage();
     renderPlayers();
     renderHistory();
+    updateTimerDisplay();
+    updateShotDisplay();
 })();
 </script>
 </body>
 </html>
-
-
