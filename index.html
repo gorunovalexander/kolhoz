@@ -1203,7 +1203,7 @@
         <div class="timer-main">
             <div class="timer-party" id="timerPartyDisplay">⏳ Партия: 10:00</div>
             <div class="timer-shot-wrapper">
-                <div class="timer-shot" id="timerShotDisplay">--</div>
+                <div class="timer-shot" id="timerShotDisplay">0</div>
                 <div class="timer-progress-bar">
                     <div class="timer-progress-fill" id="timerProgressFill"></div>
                 </div>
@@ -1263,9 +1263,9 @@
     let partySeconds = 0;
     let shotSeconds = 0;
     let shotDuration = 30;
-    let partyDuration = 600;
     let isPartyRunning = false;
     let isShotRunning = false;
+    let lastBeepSecond = -1; // для отслеживания пикания на 10,9,8...
 
     // Максимальные значения
     const MAX_BALL_COST = 10000;
@@ -1571,10 +1571,8 @@
     function startNewParty() {
         if (players.length === 0) return;
         
-        // Сохраняем текущую партию в историю
         savePartyToHistory();
         
-        // Обнуляем scored и partyScore, total остается
         players.forEach(p => {
             p.scored = 0;
             p.partyScore = 0;
@@ -1598,7 +1596,6 @@
         const tempDiv = document.createElement('div');
         
         players.forEach((player, index) => {
-            // Инициализация полей если их нет
             if (player.scored === undefined) player.scored = 0;
             if (player.partyScore === undefined) player.partyScore = 0;
             if (player.total === undefined) player.total = 0;
@@ -1768,7 +1765,6 @@
         renderPlayers();
     }
     
-    // Выбор игрока для перемещения
     document.addEventListener('click', function(e) {
         const playerCard = e.target.closest('.player-card');
         if (playerCard && !e.target.closest('button')) {
@@ -1860,7 +1856,6 @@
         }
     });
     
-    // Добавление игрока
     document.getElementById('addPlayerBtn').addEventListener('click', function() {
         const input = document.getElementById('playerNameInput');
         const name = input.value.trim();
@@ -1893,7 +1888,6 @@
         }
     });
     
-    // Изменение стоимости
     ballCostInput.addEventListener('change', function() {
         this.value = validateBallCost(parseInt(this.value));
         debounceSave();
@@ -1917,7 +1911,6 @@
         }
     });
     
-    // Кнопки +/-
     document.getElementById('ballCostPlus').addEventListener('click', function() {
         let currentValue = parseInt(ballCostInput.value) || 50;
         ballCostInput.value = validateBallCost(currentValue + 50);
@@ -1943,16 +1936,13 @@
         debounceSave();
     });
     
-    // Кнопки порядка
     document.getElementById('shuffleBtn').addEventListener('click', shufflePlayers);
     document.getElementById('reverseBtn').addEventListener('click', reversePlayers);
     document.getElementById('movePlayerUp').addEventListener('click', movePlayerUp);
     document.getElementById('movePlayerDown').addEventListener('click', movePlayerDown);
     
-    // Расчет
     document.getElementById('calculateBtn').addEventListener('click', calculateResults);
     
-    // Сброс игры
     document.getElementById('resetGameBtn').addEventListener('click', function() {
         if (players.length > 0 && confirm('Сбросить счет всех игроков? Это обнулит забитые шары, счет партии и итоговый счет.')) {
             players.forEach(p => {
@@ -1964,10 +1954,8 @@
         }
     });
     
-    // Очистка сохранений
     document.getElementById('clearStorageBtn').addEventListener('click', clearStorage);
     
-    // Обновление состояния кнопок перемещения
     setInterval(() => {
         const upBtn = document.getElementById('movePlayerUp');
         const downBtn = document.getElementById('movePlayerDown');
@@ -2013,13 +2001,9 @@
     }
 
     function updateShotDisplay() {
-        if (shotSeconds > 0) {
-            timerShotDisplay.textContent = shotSeconds;
-        } else {
-            timerShotDisplay.textContent = '0';
-        }
+        timerShotDisplay.textContent = shotSeconds > 0 ? shotSeconds : '0';
         const progress = shotDuration > 0 ? (shotSeconds / shotDuration) * 100 : 0;
-        timerProgressFill.style.width = Math.max(0, progress) + '%';
+        timerProgressFill.style.width = Math.max(0, Math.min(100, progress)) + '%';
         if (progress > 60) timerProgressFill.style.background = '#28cd41';
         else if (progress > 30) timerProgressFill.style.background = '#ff9f0a';
         else timerProgressFill.style.background = '#ff3b30';
@@ -2041,7 +2025,8 @@
             shotTimer = null;
         }
         isShotRunning = false;
-        // Не сбрасываем shotSeconds в 0, чтобы отобразить последнее значение (0)
+        lastBeepSecond = -1;
+        shotSeconds = 0;
         updateShotDisplay();
     }
 
@@ -2055,32 +2040,44 @@
             return;
         }
 
+        // Полная остановка предыдущего таймера
         if (shotTimer) {
             clearInterval(shotTimer);
             shotTimer = null;
-            isShotRunning = false;
         }
-
+        
+        // Сброс состояния
+        isShotRunning = false;
+        lastBeepSecond = -1;
+        
+        // Установка нового времени
         shotSeconds = parseInt(shotTimeInput.value) || 30;
         shotDuration = shotSeconds;
         isShotRunning = true;
         updateShotDisplay();
 
+        // Запуск нового таймера
         shotTimer = setInterval(() => {
             shotSeconds--;
             updateShotDisplay();
 
-            if (shotSeconds <= 10 && shotSeconds > 0) {
-                playBeep(1200, 100);
+            // Пикание на 10, 9, 8, ..., 1
+            if (shotSeconds > 0 && shotSeconds <= 10) {
+                if (shotSeconds !== lastBeepSecond) {
+                    lastBeepSecond = shotSeconds;
+                    playBeep(1200, 120);
+                }
             }
 
+            // Достигли 0
             if (shotSeconds <= 0) {
                 clearInterval(shotTimer);
                 shotTimer = null;
                 isShotRunning = false;
-                // Показываем 0
+                lastBeepSecond = -1;
+                shotSeconds = 0;
                 updateShotDisplay();
-                // Длинный сигнал при достижении 0
+                // Длинный сигнал
                 playLongBeep();
             }
         }, 1000);
@@ -2095,7 +2092,6 @@
 
         const mins = parseInt(partyTimeInput.value) || 10;
         partySeconds = mins * 60;
-        partyDuration = partySeconds;
         isPartyRunning = true;
         startPartyBtn.textContent = '⏹️ Остановить партию';
         startPartyBtn.disabled = false;
