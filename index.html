@@ -890,8 +890,8 @@
             color: #1d1d1f;
             border: none;
             border-radius: 16px;
-            padding: 0.8rem 2rem;
-            font-size: 1.6rem;
+            padding: 0.8rem 1rem;
+            font-size: 1.3rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
@@ -903,6 +903,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            line-height: 1.2;
         }
         .btn-next-shot:hover {
             background: #e68a00;
@@ -910,12 +912,6 @@
         }
         .btn-next-shot:active {
             transform: scale(0.97);
-        }
-        .btn-next-shot:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         .timer-actions {
@@ -1027,8 +1023,8 @@
 
         @media (max-width: 480px) {
             .btn-next-shot {
-                font-size: 1.4rem;
-                padding: 0.6rem 1.2rem;
+                font-size: 1.1rem;
+                padding: 0.6rem 0.8rem;
                 max-width: 220px;
             }
             .timer-shot {
@@ -1211,7 +1207,7 @@
                     <div class="timer-progress-fill" id="timerProgressFill"></div>
                 </div>
             </div>
-            <button class="btn-next-shot" id="nextShotBtn">🎯</button>
+            <button class="btn-next-shot" id="nextShotBtn">Следующий<br>удар</button>
         </div>
 
         <div class="timer-actions">
@@ -2004,7 +2000,6 @@
     }
 
     function playPartyEndBeep() {
-        // длинный звук другого тона
         playBeep(400, 800);
         setTimeout(() => playBeep(400, 800), 500);
         setTimeout(() => playBeep(400, 800), 1000);
@@ -2047,11 +2042,9 @@
         isShotRunning = false;
         shotSeconds = 0;
         updateShotDisplay();
-        // не меняем текст кнопки — она всегда активна
     }
 
     function startShotTimer() {
-        // кнопка всегда активна, просто перезапускаем таймер
         if (!isPartyRunning) {
             alert('Сначала запустите партию!');
             return;
@@ -2061,14 +2054,12 @@
             return;
         }
 
-        // останавливаем текущий таймер удара, если есть
         if (shotTimer) {
             clearInterval(shotTimer);
             shotTimer = null;
             isShotRunning = false;
         }
 
-        // устанавливаем новое время
         shotSeconds = parseInt(shotTimeInput.value) || 30;
         shotDuration = shotSeconds;
         isShotRunning = true;
@@ -2086,6 +2077,7 @@
                 clearInterval(shotTimer);
                 shotTimer = null;
                 isShotRunning = false;
+                // Длинный сигнал при достижении 0
                 playLongBeep();
                 shotSeconds = 0;
                 updateShotDisplay();
@@ -2095,7 +2087,6 @@
 
     function startParty() {
         if (isPartyRunning) {
-            // остановка партии
             stopPartyTimer();
             stopShotTimer();
             return;
@@ -2118,7 +2109,6 @@
                 partyTimer = null;
                 isPartyRunning = false;
                 startPartyBtn.textContent = '▶️ Запустить партию';
-                // останавливаем таймер удара
                 stopShotTimer();
                 playPartyEndBeep();
                 alert('⏰ Время партии истекло!');
