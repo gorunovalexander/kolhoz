@@ -904,7 +904,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.3;
+            gap: 0.3rem;
         }
         .btn-next-shot:hover {
             background: #e68a00;
@@ -1207,7 +1208,7 @@
                     <div class="timer-progress-fill" id="timerProgressFill"></div>
                 </div>
             </div>
-            <button class="btn-next-shot" id="nextShotBtn">Следующий<br>удар</button>
+            <button class="btn-next-shot" id="nextShotBtn">🎯 Следующий<br>удар</button>
         </div>
 
         <div class="timer-actions">
@@ -2015,9 +2016,9 @@
         if (shotSeconds > 0) {
             timerShotDisplay.textContent = shotSeconds;
         } else {
-            timerShotDisplay.textContent = '--';
+            timerShotDisplay.textContent = '0';
         }
-        const progress = shotDuration > 0 ? (shotSeconds / shotDuration) * 100 : 100;
+        const progress = shotDuration > 0 ? (shotSeconds / shotDuration) * 100 : 0;
         timerProgressFill.style.width = Math.max(0, progress) + '%';
         if (progress > 60) timerProgressFill.style.background = '#28cd41';
         else if (progress > 30) timerProgressFill.style.background = '#ff9f0a';
@@ -2040,7 +2041,7 @@
             shotTimer = null;
         }
         isShotRunning = false;
-        shotSeconds = 0;
+        // Не сбрасываем shotSeconds в 0, чтобы отобразить последнее значение (0)
         updateShotDisplay();
     }
 
@@ -2077,10 +2078,10 @@
                 clearInterval(shotTimer);
                 shotTimer = null;
                 isShotRunning = false;
+                // Показываем 0
+                updateShotDisplay();
                 // Длинный сигнал при достижении 0
                 playLongBeep();
-                shotSeconds = 0;
-                updateShotDisplay();
             }
         }, 1000);
     }
